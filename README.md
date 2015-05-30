@@ -6,14 +6,14 @@ Very simple tool for generating crosswords. *Almost* course work.
 
 1. Supports many of languages if dictionary contains lines like
 ```
-    WORD - DESCRIPTION
+WORD - DESCRIPTION
 ```
 2. Supports any grid that have format like
 ```
-    ++++
-    +--+
-    +--+
-    ++++
+++++
++--+
++--+
+++++
 ```
 
 ### Dependecies ###
@@ -24,4 +24,4 @@ Only wxWidgets.
 * [ ] Progress indication
 * [ ] Customiztion
 * [ ] Refactoring
-* [ ] Optimizations of generating (
+* [ ] Optimizations of generating crosswords
