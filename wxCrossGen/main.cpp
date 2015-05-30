@@ -26,17 +26,14 @@ MainFrame::MainFrame(wxWindow* parent, int id, const wxString& title, const wxPo
 
     set_properties();
     do_layout();
-    // end wxGlade
 }
 
 
 void MainFrame::set_properties()
 {
-    // begin wxGlade: MainFrame::set_properties
     SetTitle(_("Генератор кроссвордов"));
     SetSize(wxSize(700, 500));
     SetMinSize(wxSize(600,340));
-    // end wxGlade
 }
 
 
