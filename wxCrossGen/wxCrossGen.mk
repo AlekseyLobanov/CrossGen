@@ -2,18 +2,18 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Debug
+## Release
 ProjectName            :=wxCrossGen
-ConfigurationName      :=Debug
+ConfigurationName      :=Release
 WorkspacePath          := "/data/Sync/SyncProjects/CrossGen"
 ProjectPath            := "/data/Sync/SyncProjects/CrossGen/wxCrossGen"
-IntermediateDirectory  :=./Debug
+IntermediateDirectory  :=../Release
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Aleksey Lobanov
-Date                   :=30/05/15
+Date                   :=31/05/15
 CodeLitePath           :="/home/alex/.codelite"
 LinkerName             :=/usr/bin/g++-4.8
 SharedObjectLinkerName :=/usr/bin/g++-4.8 -shared -fPIC
@@ -28,14 +28,14 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
-Preprocessors          :=
+Preprocessors          :=$(PreprocessorSwitch)NDEBUG 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="wxCrossGen.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
-LinkOptions            :=  $(shell wx-config --debug=yes --libs --unicode=yes)
+LinkOptions            :=  -s $(shell wx-config --debug=no --libs --unicode=yes)
 IncludePath            :=  $(IncludeSwitch). 
 IncludePCH             := 
 RcIncludePath          := 
@@ -50,8 +50,8 @@ LibPath                := $(LibraryPathSwitch).
 AR       := /usr/bin/ar rcu
 CXX      := /usr/bin/g++-4.8
 CC       := /usr/bin/gcc-4.8
-CXXFLAGS :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
-CFLAGS   :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
+CXXFLAGS :=  -O2 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no) $(Preprocessors)
+CFLAGS   :=  -O2 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no) $(Preprocessors)
 ASFLAGS  := 
 AS       := /usr/bin/as
 
@@ -79,7 +79,7 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
 
 $(IntermediateDirectory)/.d:
-	@test -d ./Debug || $(MakeDirCommand) ./Debug
+	@test -d ../Release || $(MakeDirCommand) ../Release
 
 PreBuild:
 
@@ -101,6 +101,6 @@ $(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
 ## Clean
 ##
 clean:
-	$(RM) -r ./Debug/
+	$(RM) -r ../Release/
 
 

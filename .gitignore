@@ -43,3 +43,6 @@
 #CodeLite
 .clang
 .codelite
+.Debug
+*.cpp.o
+*.cpp.o.d

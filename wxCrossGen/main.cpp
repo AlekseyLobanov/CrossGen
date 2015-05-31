@@ -327,7 +327,7 @@ void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
     event.Skip();
     DictType dict;
     std::vector<wxString> words_out;
-    readDict(wxT("fdict.txt"), dict);
+    readDict(wxT("big_cross_ru.txt"), dict);
     GridType grid;
     if (tPath->GetValue() == wxEmptyString){
         wxMessageBox( wxT("Не указана путь к сетке"), wxT("Инфо"), wxICON_INFORMATION);
