@@ -13,28 +13,11 @@
 #define WXGUI_HPP
 
 #include <map>
-#include <set>
-#include <vector>
-
 #include <wx/wx.h>
 #include <wx/image.h>
 #include "wx/intl.h"
 
-typedef std::map<wxString,wxString> DictType;
-typedef std::vector< std::vector<wxChar> > GridType;
-typedef std::vector< std::vector<wxChar> > CurGridType;
-// Первый индекс -- длина слова
-typedef std::vector< std::vector<wxString> > AllWordsType; 
-typedef std::set< wxString > UsedWords;
-
-struct WordInfo {
-    size_t x;
-    size_t y;
-    size_t len;
-    size_t ind;
-    //true for vertical and false for horisontal
-    bool direct;
-};
+#include "crossgen.hpp"
 
 #ifndef APP_CATALOG
 #define APP_CATALOG "app"  // replace with the appropriate catalog name
@@ -81,4 +64,4 @@ public:
 }; // wxGlade: end class
 
 
-#endif // WXGUI_H
+#endif // WXGUI_HPP

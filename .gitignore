@@ -43,6 +43,9 @@
 #CodeLite
 .clang
 .codelite
-.Debug
+Debug
 *.cpp.o
 *.cpp.o.d
+
+#Release folder is NOT code!
+Release

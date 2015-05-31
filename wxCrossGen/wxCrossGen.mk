@@ -36,7 +36,7 @@ ObjectsFileList        :="wxCrossGen.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            :=  -s $(shell wx-config --debug=no --libs --unicode=yes)
-IncludePath            :=  $(IncludeSwitch). 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)../src 
 IncludePCH             := 
 RcIncludePath          := 
 Libs                   := 
