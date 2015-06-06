@@ -130,26 +130,25 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
         for (size_t i = 0; i < winfos.size(); ++i){
             if (winfos.at(i).direct == true){
                 for (size_t j = 0; j < winfos.at(i).len; ++j)
-                    if ( !usedCells.at(i).at(j) ){
+                    if ( !usedCells.at(winfos.at(i).x+j).at(winfos.at(i).y) ) {
                         dc.DrawText(
                             _words.at(i).at(j),
                             sq_w*(winfos.at(i).x+j) + sq_w*0.24,
                             sq_h*winfos.at(i).y
                         );
-                        usedCells.at(i).at(j) = true;
+                        usedCells.at(winfos.at(i).x+j).at(winfos.at(i).y) = true;
                     }
             } else {
                 for (size_t j = 0; j < winfos.at(i).len; ++j)
-                    if ( !usedCells.at(i).at(j) ){
+                    if ( !usedCells.at(winfos.at(i).x).at(winfos.at(i).y+j) ) {
                         dc.DrawText(
                             _words.at(i).at(j),
                             sq_w*winfos.at(i).x + sq_w*0.24,
                             sq_h*(winfos.at(i).y+j)
                         );
-                        usedCells.at(i).at(j) = true;
+                        usedCells.at(winfos.at(i).x).at(winfos.at(i).y+j) = true;
                     }
             }
-            
         }
     }
     
@@ -206,11 +205,11 @@ void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
         SetGridImage(grid);
         _words.clear();
     }
-    catch (...){
+    catch ( ... ){
         tOutput->Clear();
-        this->Refresh();
         wxMessageBox( wxT("Не могу создать кроссворд"), wxT("Ошибка"), wxICON_ERROR );
     }
+    this->Refresh();
 }
 
 

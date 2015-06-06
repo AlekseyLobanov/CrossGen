@@ -9,7 +9,7 @@
 typedef std::map<wxString,wxString> DictType;
 typedef std::vector< std::vector<wxChar> > GridType;
 typedef std::vector< std::vector<wxChar> > CurGridType;
-// Первый индекс -- длина слова
+// Fisrt index is a word length
 typedef std::vector< std::vector<wxString> > AllWordsType; 
 typedef std::set< size_t > UsedWords;
 
@@ -181,10 +181,10 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
 
 void generateCross(GridType &grid, DictType &dict, std::vector<wxString> &words_out){
     AllWordsType words;
-    for (DictType::iterator i = dict.begin(); i != dict.end(); ++i){
-        if (words.size() <= i->first.size())
-            words.resize(i->first.size() + 2);
-        words.at(i->first.size()).push_back(i->first);
+    for (DictType::iterator it = dict.begin(); it != dict.end(); ++it){
+        if (words.size() <= it->first.size())
+            words.resize(it->first.size() + 2);
+        words.at(it->first.size()).push_back(it->first);
     }
     for (size_t i = 2; i < words.size(); ++i){
         wxLogDebug(wxT("Number of words with length %d is %d"), i, words.at(i).size());
