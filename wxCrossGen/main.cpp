@@ -26,6 +26,8 @@ MainFrame::MainFrame(wxWindow* parent, int id, const wxString& title, const wxPo
 
     set_properties();
     do_layout();
+    
+    _isDictLoaded = false;
 }
 
 
@@ -162,9 +164,13 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
 
 void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
     event.Skip();
-    DictType dict;
+    
+    if ( !_isDictLoaded ) {
+        readDict(wxT("big_cross_ru.txt"), _dict);
+        _isDictLoaded = true;
+    }
+    
     std::vector<wxString> words_out;
-    readDict(wxT("big_cross_ru.txt"), dict);
     GridType grid;
     if (tPath->GetValue() == wxEmptyString){
         wxMessageBox( wxT("Не указана путь к сетке"), wxT("Инфо"), wxICON_INFORMATION);
@@ -172,7 +178,7 @@ void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
     }
     readGrid(tPath->GetValue(), grid);
     try{
-        generateCross(grid,dict,words_out);
+        generateCross(grid,_dict,words_out);
         
         _words.clear();
         _words = words_out;
@@ -187,7 +193,7 @@ void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
         for (size_t i = 0; i < words_out.size(); ++i){
             if (winfos.at(i).direct == false)
                 tOutput->AppendText(wxString::Format(wxT("%d. "), winfos.at(i).ind) 
-                  + dict[words_out.at(i)] +wxT("\n"));
+                  + _dict[words_out.at(i)] +wxT("\n"));
         }
         
         tOutput->AppendText(wxT("По горизонтали:\n"));
@@ -195,7 +201,7 @@ void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
         for (size_t i = 0; i < words_out.size(); ++i){
             if (winfos.at(i).direct == true)
                 tOutput->AppendText(wxString::Format(wxT("%d. "), winfos.at(i).ind) 
-                  + dict[words_out.at(i)]+wxT("\n"));
+                  + _dict[words_out.at(i)]+wxT("\n"));
         }
         if (winfos.size() == 0) 
             throw 42;
@@ -205,7 +211,7 @@ void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
     catch (...){
         tOutput->Clear();
         this->Refresh();
-        wxMessageBox( wxT("Не могу создать кроссворд"), wxT("Ошибка"), wxICON_ERROR);
+        wxMessageBox( wxT("Не могу создать кроссворд"), wxT("Ошибка"), wxICON_ERROR );
     }
 }
 

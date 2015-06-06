@@ -45,6 +45,9 @@ private:
     // end wxGlade
 
 protected:
+    std::vector<wxString> _words;
+    DictType _dict;
+    bool _isDictLoaded;
     // begin wxGlade: MainFrame::attributes
     wxStaticText* label_1;
     wxTextCtrl* tPath;
@@ -52,7 +55,6 @@ protected:
     wxTextCtrl* tOutput;
     wxButton* btnGenerate;
     wxStaticBitmap* bPreview;
-    std::vector<wxString> _words;
     // end wxGlade
 
     DECLARE_EVENT_TABLE();
