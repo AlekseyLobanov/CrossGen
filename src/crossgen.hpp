@@ -66,7 +66,7 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
     for (size_t i = 0; i < grid.size(); ++i){
         wxString st;
         for (size_t j = 0; j < grid.at(0).size(); ++j)
-            st+= grid.at(i).at(j);
+            st += grid.at(i).at(j);
         wxLogDebug(st);
     }
     size_t cur_ind = 1;
@@ -74,7 +74,7 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
     for (size_t i = 0; i < grid.size(); ++i){
         for (size_t j = 0; j < grid.at(0).size(); ++j){
             if (grid.at(i).at(j) == CELL_CLEAR){
-                if (((j ==0) ||  (grid.at(i).at(j - 1) != CELL_CLEAR)) &&
+                if (((j == 0) ||  (grid.at(i).at(j - 1) != CELL_CLEAR)) &&
                         (j != grid.at(0).size() - 1))
                     if (grid.at(i).at(j+1) == CELL_CLEAR){
                         size_t cur_len = 1;
@@ -161,19 +161,15 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
             
             CurGridType t_grid(grid);
             
-            if (cur_wi.direct == false){
+            if ( cur_wi.direct ){
+                for (size_t j = 0; j < cur_wi.len; ++j)
+                    t_grid.at(cur_wi.x + j).at(cur_wi.y) = cur_word.at(j);
+            } else {
                 for (size_t j = 0; j < cur_wi.len; ++j)
                     t_grid.at(cur_wi.x).at(j + cur_wi.y) = cur_word.at(j);
             }
-            
-            if (cur_wi.direct == true){
-                for (size_t j = 0; j < cur_wi.len; ++j)
-                    t_grid.at(cur_wi.x + j).at(cur_wi.y) = cur_word.at(j);
-            }
                 
             if (procCross(t_used, words, t_grid, winfos, cur_word_ind + 1, out)){
-                //wxLogDebug(wxT("Word at (%d,%d) with len = %d and index = %d and dir = %d and word is ") + cur_word,
-        //  cur_wi.x,cur_wi.y,cur_wi.len, cur_wi.ind, int(cur_wi.direct));
                 wxLogDebug(cur_word);
                 out.push_back(cur_word);
                 return true;
@@ -187,7 +183,7 @@ void generateCross(GridType &grid, DictType &dict, std::vector<wxString> &words_
     AllWordsType words;
     for (DictType::iterator i = dict.begin(); i != dict.end(); ++i){
         if (words.size() <= i->first.size())
-            words.resize(i->first.size() + 4);
+            words.resize(i->first.size() + 2);
         words.at(i->first.size()).push_back(i->first);
     }
     for (size_t i = 2; i < words.size(); ++i){
