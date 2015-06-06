@@ -119,16 +119,35 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
     }
     
     if (_words.size() > 0) {
+        using std::vector;
+        vector< vector< bool > > usedCells(
+            grid.size(), 
+            vector<bool>(grid.at(0).size(), false)
+        );
         cur_f = dc.GetFont();
         cur_f.SetPointSize(sq_h*0.6);
         dc.SetFont(cur_f);
         for (size_t i = 0; i < winfos.size(); ++i){
             if (winfos.at(i).direct == true){
                 for (size_t j = 0; j < winfos.at(i).len; ++j)
-                    dc.DrawText(_words.at(i).at(j),sq_w*(winfos.at(i).x+j)+sq_w*0.24, sq_h*winfos.at(i).y);
+                    if ( !usedCells.at(i).at(j) ){
+                        dc.DrawText(
+                            _words.at(i).at(j),
+                            sq_w*(winfos.at(i).x+j) + sq_w*0.24,
+                            sq_h*winfos.at(i).y
+                        );
+                        usedCells.at(i).at(j) = true;
+                    }
             } else {
                 for (size_t j = 0; j < winfos.at(i).len; ++j)
-                    dc.DrawText(_words.at(i).at(j),sq_w*winfos.at(i).x+sq_w*0.24, sq_h*(winfos.at(i).y+j));
+                    if ( !usedCells.at(i).at(j) ){
+                        dc.DrawText(
+                            _words.at(i).at(j),
+                            sq_w*winfos.at(i).x + sq_w*0.24,
+                            sq_h*(winfos.at(i).y+j)
+                        );
+                        usedCells.at(i).at(j) = true;
+                    }
             }
             
         }
