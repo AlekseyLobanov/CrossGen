@@ -64,10 +64,8 @@ void MainFrame::do_layout()
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
-    // begin wxGlade: MainFrame::event_table
     EVT_BUTTON(wxID_PATH, MainFrame::OnbtnPathClick)
     EVT_BUTTON(wxID_GENERATE, MainFrame::OnbtnGenerateClick)
-    // end wxGlade
 END_EVENT_TABLE();
 
 void MainFrame::OnbtnPathClick(wxCommandEvent &event) {

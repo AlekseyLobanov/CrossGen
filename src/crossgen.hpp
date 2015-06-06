@@ -11,7 +11,7 @@ typedef std::vector< std::vector<wxChar> > GridType;
 typedef std::vector< std::vector<wxChar> > CurGridType;
 // Первый индекс -- длина слова
 typedef std::vector< std::vector<wxString> > AllWordsType; 
-typedef std::set< wxString > UsedWords;
+typedef std::set< size_t > UsedWords;
 
 struct WordInfo {
     size_t x;
@@ -135,10 +135,10 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
     size_t rand_add = rand() % 100000;
     size_t cur_len = cur_wi.len;
     size_t cur_words_size = words.at(cur_len).size();
-    for (size_t i = 0; i < cur_words_size; ++i){
-        wxString cur_word = words.at(cur_len).at((i + rand_add) % cur_words_size);
-        if (used.find(cur_word) != used.end())
+    for (size_t icw = 0; icw < cur_words_size; ++icw){
+        if (used.find(icw) != used.end())
             continue;
+        wxString cur_word = words.at(cur_len).at((icw + rand_add) % cur_words_size);
         // Показывает, можно ли записать это слово в сетку
         bool can_write = true;
         if (cur_wi.direct == false){
@@ -157,7 +157,7 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
         
         if (can_write) {
             UsedWords t_used(used);
-            t_used.insert(cur_word);
+            t_used.insert(icw);
             
             CurGridType t_grid(grid);
             
