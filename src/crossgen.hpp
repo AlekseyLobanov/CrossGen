@@ -11,7 +11,7 @@ typedef std::vector< std::vector<wxChar> > GridType;
 typedef std::vector< std::vector<wxChar> > CurGridType;
 // Fisrt index is a word length
 typedef std::vector< std::vector<wxString> > AllWordsType; 
-typedef std::set< size_t > UsedWords;
+typedef std::set< uint32_t > UsedWords;
 
 struct WordInfo {
     size_t x;
