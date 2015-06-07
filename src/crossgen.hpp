@@ -9,6 +9,7 @@
 #include "crossbasetypes.hpp"
 
 const wxChar CELL_CLEAR = wxT('+');
+const uint32_t MAX_WORD_COUNT = 262144; // =2^18
 
 void readDict(wxString path, DictType &dict){
     wxTextFile f;
@@ -112,6 +113,10 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
     }
 }
 
+template <class T>
+uint32_t getWordUniq(T w_ind, T w_len){
+    return w_ind + w_len * MAX_WORD_COUNT;
+}
 
 bool procCross(UsedWords used, AllWordsType &words, CurGridType grid, 
         std::vector<WordInfo> &winfos, size_t cur_word_ind, std::vector<wxString> &out){
@@ -122,7 +127,7 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
     size_t cur_len = cur_wi.len;
     size_t cur_words_size = words.at(cur_len).size();
     for (size_t icw = 0; icw < cur_words_size; ++icw){
-        if (used.find(icw) != used.end())
+        if (used.find(getWordUniq(icw,cur_len)) != used.end())
             continue;
         wxString cur_word = words.at(cur_len).at((icw + rand_add) % cur_words_size);
         // Показывает, можно ли записать это слово в сетку
@@ -143,7 +148,7 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
         
         if (can_write) {
             UsedWords t_used(used);
-            t_used.insert(icw);
+            t_used.insert(getWordUniq(icw,cur_len));
             
             CurGridType t_grid(grid);
             
