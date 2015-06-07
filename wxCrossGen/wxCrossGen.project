@@ -31,6 +31,7 @@
   </VirtualDirectory>
   <VirtualDirectory Name="Shared">
     <File Name="../src/crossgen.hpp"/>
+    <File Name="../src/crossbasetypes.hpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
