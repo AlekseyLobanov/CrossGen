@@ -60,20 +60,21 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
     bool exist = false;
     for (size_t j = 0; j < grid.at(0).size(); ++j){
         for (size_t i = 0; i < grid.size(); ++i){
-            if (grid.at(i).at(j) == CELL_CLEAR){
-                if (((j == 0) ||  (grid.at(i).at(j - 1) != CELL_CLEAR)) &&
-                        (j != grid.at(0).size() - 1))
-                    if (grid.at(i).at(j+1) == CELL_CLEAR){
+            if ( grid.at(i).at(j) == CELL_CLEAR ){
+                if ( ((j == 0) ||  (grid.at(i).at(j - 1) != CELL_CLEAR)) &&
+                        (j != grid.at(0).size() - 1) )
+                    if ( grid.at(i).at(j+1) == CELL_CLEAR ){
                         size_t cur_len = 1;
                         bool cont = true;
-                        while ((j + cur_len < grid.at(0).size()) && cont){
+                        while ( (j + cur_len < grid.at(0).size()) && cont ){
                             ++cur_len;
-                            if (grid.at(i).at(j+cur_len-1) != CELL_CLEAR){
+                            if ( grid.at(i).at(j+cur_len-1) != CELL_CLEAR ){
                                 cont = false;
                                 --cur_len;
                             }
                         }
-                        exist = true;
+                        exist    = true;
+                        
                         WordInfo t;
                         t.x      = i;
                         t.y      = j;
@@ -83,19 +84,19 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
                         winfos.push_back(t);
                     }
                 
-                if (((i ==0) ||  (grid.at(i - 1).at(j) != CELL_CLEAR)) &&
-                        (i != grid.size() - 1))
-                    if (grid.at(i + 1).at(j) == CELL_CLEAR){
+                if ( ((i ==0) ||  (grid.at(i - 1).at(j) != CELL_CLEAR)) &&
+                        (i != grid.size() - 1) )
+                    if ( grid.at(i + 1).at(j) == CELL_CLEAR ){
                         size_t cur_len = 1;
                         bool cont = true;
                         while ((i + cur_len < grid.size()) && cont){
                             ++cur_len;
                             if (grid.at(i+cur_len-1).at(j) != CELL_CLEAR){
                                 cont = false;
-                                cur_len--;
+                                --cur_len;
                             }
                         }
-                        exist = true;
+                        exist    = true;
                         WordInfo t;
                         t.x      = i;
                         t.y      = j;
@@ -104,7 +105,7 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
                         t.direct = true;
                         winfos.push_back(t);
                     }
-                if (exist){
+                if ( exist ){
                     exist = false;
                     ++cur_ind;
                 }

@@ -68,12 +68,12 @@ void MainFrame::OnbtnPathClick(wxCommandEvent &event) {
     wxFileDialog dlgOpen(this, wxT("Открыть файл кроссворда"), wxEmptyString, wxEmptyString,
     wxT("Файлы кроссворда (*.cross)|*.cross"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     
-    if (dlgOpen.ShowModal() == wxID_CANCEL)
+    if ( dlgOpen.ShowModal() == wxID_CANCEL )
         return;
     // proceed loading the file chosen by the user;
     // this can be done with e.g. wxWidgets input streams:
     wxFileInputStream input_stream(dlgOpen.GetPath());
-    if (!input_stream.IsOk()) {
+    if ( !input_stream.IsOk() ) {
         wxLogError(wxT("Cannot open file ")+dlgOpen.GetPath());
         return;
     }
