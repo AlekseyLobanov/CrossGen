@@ -31,17 +31,14 @@ MainFrame::MainFrame(wxWindow* parent, int id, const wxString& title, const wxPo
 }
 
 
-void MainFrame::set_properties()
-{
+void MainFrame::set_properties() {
     SetTitle(_("Генератор кроссвордов"));
     SetSize(wxSize(700, 500));
     SetMinSize(wxSize(600,340));
 }
 
 
-void MainFrame::do_layout()
-{
-    // begin wxGlade: MainFrame::do_layout
+void MainFrame::do_layout() {
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_4 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_3 = new wxBoxSizer(wxHORIZONTAL);
@@ -59,7 +56,6 @@ void MainFrame::do_layout()
     sizer_1->Add(sizer_4, 0, wxEXPAND, 0);
     SetSizer(sizer_1);
     Layout();
-    // end wxGlade
 }
 
 
@@ -69,8 +65,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 END_EVENT_TABLE();
 
 void MainFrame::OnbtnPathClick(wxCommandEvent &event) {
-    event.Skip();
-    wxFileDialog dlgOpen(this, wxT("Open XYZ file"), wxEmptyString, wxEmptyString,
+    wxFileDialog dlgOpen(this, wxT("Открыть файл кроссворда"), wxEmptyString, wxEmptyString,
     wxT("Файлы кроссворда (*.cross)|*.cross"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     
     if (dlgOpen.ShowModal() == wxID_CANCEL)
@@ -118,7 +113,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
         dc.DrawText(wxString::Format(wxT("%d"),winfos.at(i).ind), sq_w*winfos.at(i).x, sq_h*winfos.at(i).y);
     }
     
-    if (_words.size() > 0) {
+    if ( _words.size() > 0 ) {
         using std::vector;
         vector< vector< bool > > usedCells(
             grid.size(), 
@@ -127,8 +122,8 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
         cur_f = dc.GetFont();
         cur_f.SetPointSize(sq_h*0.6);
         dc.SetFont(cur_f);
-        for (size_t i = 0; i < winfos.size(); ++i){
-            if (winfos.at(i).direct == true){
+        for ( size_t i = 0; i < winfos.size(); ++i ) {
+            if ( winfos.at(i).direct == true ) {
                 for (size_t j = 0; j < winfos.at(i).len; ++j)
                     if ( !usedCells.at(winfos.at(i).x+j).at(winfos.at(i).y) ) {
                         dc.DrawText(
@@ -160,8 +155,6 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
 }
 
 void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
-    event.Skip();
-    
     if ( !_isDictLoaded ) {
         readDict(wxT("big_cross_ru.txt"), _dict);
         _isDictLoaded = true;

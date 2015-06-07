@@ -54,7 +54,7 @@ void readGrid(wxString path, GridType &grid){
         wxLogDebug(str);
         for (unsigned int j = 0; j < str.size(); ++j)
             grid.at(j).at(i) = str.at(j);
-        i++;
+        ++i;
     }
     wxLogDebug(wxT("Прочитана сетка размером %d x %d"), 
       static_cast<int>(grid.size()), static_cast<int>(grid.at(0).size()));
@@ -80,10 +80,10 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
                         size_t cur_len = 1;
                         bool cont = true;
                         while ((j + cur_len < grid.at(0).size()) && cont){
-                            cur_len++;
+                            ++cur_len;
                             if (grid.at(i).at(j+cur_len-1) != CELL_CLEAR){
                                 cont = false;
-                                cur_len--;
+                                --cur_len;
                             }
                         }
                         exist = true;
@@ -102,7 +102,7 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
                         size_t cur_len = 1;
                         bool cont = true;
                         while ((i + cur_len < grid.size()) && cont){
-                            cur_len++;
+                            ++cur_len;
                             if (grid.at(i+cur_len-1).at(j) != CELL_CLEAR){
                                 cont = false;
                                 cur_len--;
@@ -119,7 +119,7 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
                     }
                 if (exist){
                     exist = false;
-                    cur_ind++;
+                    ++cur_ind;
                 }
             }
         }
