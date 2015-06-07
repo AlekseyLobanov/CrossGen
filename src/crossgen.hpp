@@ -58,8 +58,8 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
     }
     size_t cur_ind = 1;
     bool exist = false;
-    for (size_t i = 0; i < grid.size(); ++i){
-        for (size_t j = 0; j < grid.at(0).size(); ++j){
+    for (size_t j = 0; j < grid.at(0).size(); ++j){
+        for (size_t i = 0; i < grid.size(); ++i){
             if (grid.at(i).at(j) == CELL_CLEAR){
                 if (((j == 0) ||  (grid.at(i).at(j - 1) != CELL_CLEAR)) &&
                         (j != grid.at(0).size() - 1))
