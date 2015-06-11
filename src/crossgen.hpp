@@ -58,17 +58,19 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
     }
     size_t cur_ind = 1;
     bool exist = false;
-    for (size_t j = 0; j < grid.at(0).size(); ++j){
-        for (size_t i = 0; i < grid.size(); ++i){
-            if ( grid.at(i).at(j) == CELL_CLEAR ){
+    auto y_len = grid.at(0).size();
+    auto x_len = grid.size();
+    for (size_t j = 0; j < y_len; ++j){
+        for (size_t i = 0; i < x_len; ++i){
+            if ( grid.at(i).at(j) == CELL_CLEAR ) {
                 if ( ((j == 0) ||  (grid.at(i).at(j - 1) != CELL_CLEAR)) &&
-                        (j != grid.at(0).size() - 1) )
-                    if ( grid.at(i).at(j+1) == CELL_CLEAR ){
+                        (j !=y_len - 1) )
+                    if ( grid.at(i).at(j+1) == CELL_CLEAR ) {
                         size_t cur_len = 1;
                         bool cont = true;
-                        while ( (j + cur_len < grid.at(0).size()) && cont ){
+                        while ( (j + cur_len < y_len) && cont ) {
                             ++cur_len;
-                            if ( grid.at(i).at(j+cur_len-1) != CELL_CLEAR ){
+                            if ( grid.at(i).at(j+cur_len-1) != CELL_CLEAR ) {
                                 cont = false;
                                 --cur_len;
                             }
@@ -85,11 +87,11 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
                     }
                 
                 if ( ((i ==0) ||  (grid.at(i - 1).at(j) != CELL_CLEAR)) &&
-                        (i != grid.size() - 1) )
+                        (i != x_len - 1) )
                     if ( grid.at(i + 1).at(j) == CELL_CLEAR ){
                         size_t cur_len = 1;
                         bool cont = true;
-                        while ((i + cur_len < grid.size()) && cont){
+                        while ((i + cur_len < x_len) && cont){
                             ++cur_len;
                             if (grid.at(i+cur_len-1).at(j) != CELL_CLEAR){
                                 cont = false;
