@@ -10,6 +10,7 @@
 #include "wxgui.hpp"
 
 #include "crossgen.hpp"
+#include "crossexport.hpp"
 
 #define wxID_PATH 1079
 #define wxID_GENERATE 1080
@@ -109,7 +110,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
         }
     }
     
-    for (size_t i = 0; i < winfos.size(); ++i){
+    for (size_t i = 0; i < winfos.size(); ++i) {
         dc.DrawText(wxString::Format(wxT("%d"),winfos.at(i).ind), sq_w*winfos.at(i).x, sq_h*winfos.at(i).y);
     }
     
