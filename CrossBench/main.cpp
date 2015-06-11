@@ -2,6 +2,15 @@
 
 #include "crossbasetypes.hpp"
 
+/* To-Do:
+ * Console app that runs generating of crosswords
+ * with random or not. And if yes with command-line parametrs we can
+ * set number of tests and get
+ * 1. Worst, Best
+ * 2. Mean
+ * 3. Dispersion
+ */
+
 // application class
 class wxMiniApp : public wxApp
 {
