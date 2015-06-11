@@ -4,6 +4,7 @@
 #include <set>
 #include <vector>
 #include <cstdint>
+#include <map>
 
 typedef std::map<wxString,wxString> DictType;
 typedef std::vector< std::vector<wxChar> > GridType;
