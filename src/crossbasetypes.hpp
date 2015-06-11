@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <map>
 
-typedef std::map<wxString,wxString> DictType;
+typedef std::map< wxString, wxString > DictType;
 typedef std::vector< std::vector<wxChar> > GridType;
 typedef std::vector< std::vector<wxChar> > CurGridType;
 // Fisrt index is a word length

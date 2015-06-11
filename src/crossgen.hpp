@@ -11,7 +11,7 @@
 const wxChar CELL_CLEAR = wxT('+');
 const uint32_t MAX_WORD_COUNT = 262144; // =2^18
 
-void readDict(wxString path, DictType &dict){
+void readDict(const wxString path, DictType &dict){
     wxTextFile f;
     f.Open(path);
     for ( wxString str = f.GetFirstLine(); !f.Eof(); str = f.GetNextLine() ) {
@@ -26,7 +26,7 @@ void readDict(wxString path, DictType &dict){
     f.Close();
 };
 
-void readGrid(wxString path, GridType &grid){
+void readGrid(const wxString path, GridType &grid){
     wxTextFile f;
     f.Open(path);
     wxString str = f.GetFirstLine();
@@ -48,7 +48,7 @@ void readGrid(wxString path, GridType &grid){
     f.Close();
 }
 
-void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
+void generateWordInfo(const GridType &grid, std::vector<WordInfo> &winfos){
     wxLogDebug(wxT("Printing grid: "));
     for (size_t i = 0; i < grid.size(); ++i){
         wxString st;
@@ -117,7 +117,7 @@ void generateWordInfo(GridType &grid, std::vector<WordInfo> &winfos){
 }
 
 template <class T>
-uint32_t getWordUniq(T w_ind, T w_len){
+uint32_t getWordUniq(const T w_ind, const T w_len){
     return w_ind + w_len * MAX_WORD_COUNT;
 }
 
@@ -173,7 +173,7 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
     return false;
 }
 
-void generateCross(GridType &grid, DictType &dict, std::vector<wxString> &words_out){
+void generateCross(GridType &grid, const DictType &dict, std::vector<wxString> &words_out){
     AllWordsType words;
     for (DictType::iterator it = dict.begin(); it != dict.end(); ++it){
         if (words.size() <= it->first.size())
