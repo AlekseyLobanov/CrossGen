@@ -24,8 +24,6 @@ void readDict(const wxString path, DictType &dict){
         val = str.Right(str.size() - del_ind - 2);
         dict[key] = val;
     }
-    wxLogDebug(wxString::Format(wxT("Прочитан словарь размером %d записей"), 
-      static_cast<int>(dict.size())));
     f.Close();
 };
 
@@ -167,7 +165,6 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
             }
                 
             if (procCross(t_used, words, t_grid, winfos, cur_word_ind + 1, out)){
-                wxLogDebug(cur_word);
                 out.push_back(cur_word);
                 return true;
             }
@@ -182,9 +179,6 @@ void generateCross(GridType &grid, const DictType &dict, std::vector<wxString> &
         if (words.size() <= it->first.size())
             words.resize(it->first.size() + 2);
         words.at(it->first.size()).push_back(it->first);
-    }
-    for (size_t i = 2; i < words.size(); ++i){
-        wxLogDebug(wxT("Number of words with length %d is %d"), i, words.at(i).size());
     }
     std::vector<WordInfo> winfos;
     generateWordInfo(grid, winfos);

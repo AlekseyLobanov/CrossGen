@@ -2,6 +2,7 @@
 
 #include <wx/app.h>
 #include <wx/cmdline.h>
+//#include <wx/time.h> 
 
 #include "crossbasetypes.hpp"
 #include "crossgen.hpp"
@@ -10,13 +11,11 @@
  * Console app that runs generating of crosswords
  * with random or not. And if yes with command-line parametrs we can
  * set number of tests and get
- * 1. Worst, Best
- * 2. Mean
  * 3. Dispersion
  */
 
 static const wxCmdLineEntryDesc cmdLineDesc[] = {
-    { wxCMD_LINE_PARAM , wxT(""), wxT(""), wxT("cross_path"), 
+    { wxCMD_LINE_PARAM , wxT(""), wxT(""), wxT("grid_path"), 
         wxCMD_LINE_VAL_STRING },
     { wxCMD_LINE_PARAM, wxT(""), wxT(""), wxT("dict_path"),
         wxCMD_LINE_VAL_STRING },
@@ -35,22 +34,40 @@ int main(int argc, char **argv) {
     }
     wxCmdLineParser cmd_parser(cmdLineDesc, argc, argv);
     long run_count = 10;
-    wxString cross_path, dict_path;
+    wxString grid_path, dict_path;
     switch ( cmd_parser.Parse() ) {
         case -1:
             return 0;
         case 0:
             cmd_parser.Found(wxT("count"), &run_count);
-            cross_path = cmd_parser.GetParam(0);
+            grid_path = cmd_parser.GetParam(0);
             dict_path = cmd_parser.GetParam(1);
-            wxPrintf(wxT("cross_path = ") + cross_path + wxT("\n"));
-            wxPrintf(wxT("dict_path = ") + dict_path + wxT("\n"));
-            wxPrintf(wxT("run_count = %d\n"), run_count);
+            wxLogDebug(wxT("grid_path = ") + grid_path + wxT("\n"));
+            wxLogDebug(wxT("dict_path = ") + dict_path + wxT("\n"));
+            wxLogDebug(wxT("run_count = %d\n"), run_count);
             break;
         default:
             return 0;
     }
+    std::vector< wxLongLong > durs(run_count); // durations
+    std::vector< wxString > words_out;
+    DictType dict;
+    GridType grid;
     
+    readDict(dict_path, dict);
+    readGrid(grid_path, grid);
 
+    for (long i = 0; i < run_count; ++i) {
+        words_out.clear();
+        durs.at(i) = wxGetLocalTimeMillis();
+        generateCross(grid,dict,words_out);
+        if ( words_out.size() == 0 )
+            wxPrintf(wxT("Error in creating crossword #%l!\n"),i);
+        durs.at(i) = wxGetLocalTimeMillis() - durs.at(i);
+    }
+    wxLongLong tm_total = std::accumulate(durs.begin(),durs.end(), wxLongLong(0,0));
+    wxLongLong tm_mean  = tm_total / run_count;
+    wxPrintf(wxT("Total time = ") + tm_total.ToString() + wxT(" ms.\nMean time  = ") 
+        + tm_mean.ToString() + wxT(" ms.\n"));
     return 0;
 }
