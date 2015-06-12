@@ -2,7 +2,6 @@
 
 #include <wx/app.h>
 #include <wx/cmdline.h>
-//#include <wx/time.h> 
 
 #include "crossbasetypes.hpp"
 #include "crossgen.hpp"
