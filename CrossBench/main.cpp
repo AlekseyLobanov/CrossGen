@@ -1,6 +1,10 @@
-#include <wx/wx.h>
+#include "wx/wx.h"
+
+#include <wx/app.h>
+#include <wx/cmdline.h>
 
 #include "crossbasetypes.hpp"
+#include "crossgen.hpp"
 
 /* To-Do:
  * Console app that runs generating of crosswords
@@ -11,35 +15,42 @@
  * 3. Dispersion
  */
 
-// application class
-class wxMiniApp : public wxApp
-{
-public:
-	// function called at the application initialization
-	virtual bool OnInit();
-
-	// event handler for button click
-	void OnClick(wxCommandEvent& event) {
-		GetTopWindow()->Close();
-	}
+static const wxCmdLineEntryDesc cmdLineDesc[] = {
+    { wxCMD_LINE_PARAM , wxT(""), wxT(""), wxT("cross_path"), 
+        wxCMD_LINE_VAL_STRING },
+    { wxCMD_LINE_PARAM, wxT(""), wxT(""), wxT("dict_path"),
+        wxCMD_LINE_VAL_STRING },
+    { wxCMD_LINE_OPTION, wxT("c"), wxT("count"), wxT("times to run generation, default = 10") ,
+        wxCMD_LINE_VAL_NUMBER },
+    { wxCMD_LINE_SWITCH, wxT("h"), wxT("help"), wxT("show this help message"),
+        wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
+    { wxCMD_LINE_NONE }
 };
 
-IMPLEMENT_APP(wxMiniApp);
+int main(int argc, char **argv) {
+    wxInitializer wx_initializer;
+    if ( !wx_initializer ) {
+        fprintf(stderr, "Failed to initialize the wxWidgets library, aborting.");
+        return -1;
+    }
+    wxCmdLineParser cmd_parser(cmdLineDesc, argc, argv);
+    long run_count = 10;
+    wxString cross_path, dict_path;
+    switch ( cmd_parser.Parse() ) {
+        case -1:
+            return 0;
+        case 0:
+            cmd_parser.Found(wxT("count"), &run_count);
+            cross_path = cmd_parser.GetParam(0);
+            dict_path = cmd_parser.GetParam(1);
+            wxPrintf(wxT("cross_path = ") + cross_path + wxT("\n"));
+            wxPrintf(wxT("dict_path = ") + dict_path + wxT("\n"));
+            wxPrintf(wxT("run_count = %d\n"), run_count);
+            break;
+        default:
+            return 0;
+    }
+    
 
-bool wxMiniApp::OnInit()
-{
-	// create a new frame and set it as the top most application window
-	SetTopWindow( new wxFrame( NULL, -1, wxT(""), wxDefaultPosition, wxSize( 100, 50) ) );
-
-	// create new button and assign it to the main frame
-	new wxButton( GetTopWindow(), wxID_EXIT, wxT("Click!") );
-
-	// connect button click event with event handler
-	Connect(wxID_EXIT, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(wxMiniApp::OnClick) );
-
-	// show main frame
-	GetTopWindow()->Show();
-
-	// enter the application's main loop
-	return true;
+    return 0;
 }

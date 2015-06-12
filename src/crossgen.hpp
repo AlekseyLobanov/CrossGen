@@ -3,8 +3,11 @@
 
 #include <set>
 #include <vector>
+#include <map>
+#include <algorithm>
 
 #include <wx/wx.h>
+#include <wx/textfile.h>
 
 #include "crossbasetypes.hpp"
 
@@ -175,7 +178,7 @@ bool procCross(UsedWords used, AllWordsType &words, CurGridType grid,
 
 void generateCross(GridType &grid, const DictType &dict, std::vector<wxString> &words_out){
     AllWordsType words;
-    for (DictType::iterator it = dict.begin(); it != dict.end(); ++it){
+    for (auto it = dict.begin(); it != dict.end(); ++it){
         if (words.size() <= it->first.size())
             words.resize(it->first.size() + 2);
         words.at(it->first.size()).push_back(it->first);
