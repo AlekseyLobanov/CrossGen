@@ -187,7 +187,6 @@ void generateCross(GridType &grid, const DictType &dict, std::vector<wxString> &
           winfos.at(i).x,winfos.at(i).y,winfos.at(i).len, winfos.at(i).ind, int(winfos.at(i).direct));
     
     UsedWords t_used;
-    srand(time(NULL));
     procCross(t_used, words, grid, winfos, 0, words_out);
     std::reverse(words_out.begin(), words_out.end());
 }

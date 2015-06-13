@@ -29,6 +29,7 @@ MainFrame::MainFrame(wxWindow* parent, int id, const wxString& title, const wxPo
     do_layout();
     
     _isDictLoaded = false;
+    srand(time(NULL));
 }
 
 
