@@ -20,6 +20,8 @@ static const wxCmdLineEntryDesc cmdLineDesc[] = {
         wxCMD_LINE_VAL_STRING },
     { wxCMD_LINE_OPTION, wxT("c"), wxT("count"), wxT("times to run generation, default = 10") ,
         wxCMD_LINE_VAL_NUMBER },
+    { wxCMD_LINE_SWITCH, wxT("r"), wxT("rand"), wxT("enables generating random crosswords") ,
+        wxCMD_LINE_VAL_NONE },
     { wxCMD_LINE_SWITCH, wxT("h"), wxT("help"), wxT("show this help message"),
         wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
     { wxCMD_LINE_NONE }
@@ -32,13 +34,17 @@ int main(int argc, char **argv) {
         return -1;
     }
     wxCmdLineParser cmd_parser(cmdLineDesc, argc, argv);
+    
     long run_count = 10;
     wxString grid_path, dict_path;
+    bool is_rand = false;
+    
     switch ( cmd_parser.Parse() ) {
         case -1:
             return 0;
         case 0:
             cmd_parser.Found(wxT("count"), &run_count);
+            is_rand   = cmd_parser.Found(wxT("rand"));
             grid_path = cmd_parser.GetParam(0);
             dict_path = cmd_parser.GetParam(1);
             wxLogDebug(wxT("grid_path = ") + grid_path + wxT("\n"));
@@ -55,8 +61,13 @@ int main(int argc, char **argv) {
     
     readDict(dict_path, dict);
     readGrid(grid_path, grid);
-
+    
+    if ( is_rand )
+        srand(time(NULL));
+    
     for (long i = 0; i < run_count; ++i) {
+        if ( !is_rand )
+            srand(42);
         words_out.clear();
         durs.at(i) = wxGetLocalTimeMillis();
         generateCross(grid,dict,words_out);
@@ -65,7 +76,7 @@ int main(int argc, char **argv) {
         durs.at(i) = wxGetLocalTimeMillis() - durs.at(i);
     }
     wxLongLong tm_total = std::accumulate(durs.begin(),durs.end(), wxLongLong(0,0));
-    wxLongLong tm_mean  = tm_total / run_count;
+    wxLongLong tm_mean  = (tm_total + run_count/2) / run_count;
     wxPrintf(wxT("Total time = ") + tm_total.ToString() + wxT(" ms.\nMean time  = ") 
         + tm_mean.ToString() + wxT(" ms.\n"));
     return 0;
