@@ -18,9 +18,11 @@ static const wxCmdLineEntryDesc cmdLineDesc[] = {
         wxCMD_LINE_VAL_STRING },
     { wxCMD_LINE_PARAM, wxT(""), wxT(""), wxT("dict_path"),
         wxCMD_LINE_VAL_STRING },
-    { wxCMD_LINE_OPTION, wxT("c"), wxT("count"), wxT("times to run generation, default = 10") ,
+    { wxCMD_LINE_OPTION, wxT("c"), wxT("count"), wxT("times to run generation, default = 10"),
         wxCMD_LINE_VAL_NUMBER },
-    { wxCMD_LINE_SWITCH, wxT("r"), wxT("rand"), wxT("enables generating random crosswords") ,
+    { wxCMD_LINE_SWITCH, wxT("r"), wxT("rand"), wxT("enables generating random crosswords"),
+        wxCMD_LINE_VAL_NONE },
+    { wxCMD_LINE_SWITCH, wxT("v"), wxT("verbose"), wxT("enables verbose mode"),
         wxCMD_LINE_VAL_NONE },
     { wxCMD_LINE_SWITCH, wxT("h"), wxT("help"), wxT("show this help message"),
         wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
@@ -37,16 +39,19 @@ int main(int argc, char **argv) {
     
     long run_count = 10;
     wxString grid_path, dict_path;
-    bool is_rand = false;
+    
+    bool is_rand    = false;
+    bool is_verbose = false;
     
     switch ( cmd_parser.Parse() ) {
         case -1:
             return 0;
         case 0:
             cmd_parser.Found(wxT("count"), &run_count);
-            is_rand   = cmd_parser.Found(wxT("rand"));
-            grid_path = cmd_parser.GetParam(0);
-            dict_path = cmd_parser.GetParam(1);
+            is_rand    = cmd_parser.Found(wxT("rand"));
+            is_verbose = cmd_parser.Found(wxT("verbose"));
+            grid_path  = cmd_parser.GetParam(0);
+            dict_path  = cmd_parser.GetParam(1);
             wxLogDebug(wxT("grid_path = ") + grid_path + wxT("\n"));
             wxLogDebug(wxT("dict_path = ") + dict_path + wxT("\n"));
             wxLogDebug(wxT("run_count = %d\n"), run_count);
@@ -72,8 +77,11 @@ int main(int argc, char **argv) {
         durs.at(i) = wxGetLocalTimeMillis();
         generateCross(grid,dict,words_out);
         if ( words_out.size() == 0 )
-            wxPrintf(wxT("Error in creating crossword #%l!\n"),i);
+            wxPrintf(wxT("Error in creating #%i!\n"),i+1);
         durs.at(i) = wxGetLocalTimeMillis() - durs.at(i);
+        if ( is_verbose )
+            wxPrintf(wxT("Time to generate #%i is ") 
+                + durs.at(i).ToString() + wxT(" ms\n"), i+1);
     }
     wxLongLong tm_total = std::accumulate(durs.begin(),durs.end(), wxLongLong(0,0));
     wxLongLong tm_mean  = (tm_total + run_count/2) / run_count;
