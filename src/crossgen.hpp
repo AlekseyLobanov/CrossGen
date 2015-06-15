@@ -248,9 +248,14 @@ void generateCross(GridType &grid, const DictType &dict, std::vector<wxString> &
     std::reverse(words_trans_out.begin(), words_trans_out.end());
     BackedCharsTransType bctt = getFromCharsTransed(trans_type);
     words_out.clear();
-    for (auto it = words_trans_out.begin(); it != words_trans_out.end(); ++it){
-        words_out.push_back(getFromTransed(*it, bctt));
-    }
+    words_out.resize(words_trans_out.size());
+    std::transform(
+        words_trans_out.begin(),
+        words_trans_out.end(),
+        words_out.begin(), [bctt](const TransedWord &tw){
+            return getFromTransed(tw, bctt);
+        }
+    );
 }
 
 #endif // CROSSGEN_HPP
