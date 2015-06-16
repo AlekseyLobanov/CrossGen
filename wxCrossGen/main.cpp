@@ -101,6 +101,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
     dc.SelectObject( wxNullBitmap );
     
     this->Refresh();
+    this->GetSizer()->RecalcSizes();
 }
 
 void MainFrame::onGenerateClick(wxCommandEvent &event) {
