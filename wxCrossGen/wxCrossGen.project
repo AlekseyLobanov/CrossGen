@@ -120,4 +120,8 @@
       </Completion>
     </Configuration>
   </Settings>
+  <VirtualDirectory Name="FormBuilderGUI">
+    <File Name="fbgui/fbgui.cpp"/>
+    <File Name="fbgui/fbgui.h"/>
+  </VirtualDirectory>
 </CodeLite_Project>

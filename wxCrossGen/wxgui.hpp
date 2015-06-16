@@ -3,6 +3,7 @@
 #ifndef WXGUI_HPP
 #define WXGUI_HPP
 
+#include <ctime>
 #include <map>
 #include <wx/wx.h>
 #include <wx/image.h>
@@ -10,46 +11,41 @@
 
 #include "crossgen.hpp"
 
+#include "fbgui/fbgui.h"
+
 #ifndef APP_CATALOG
 #define APP_CATALOG "app"  // replace with the appropriate catalog name
 #endif
 
 
-class MainFrame: public wxFrame {
-public:
-    // begin wxGlade: MainFrame::ids
-    // end wxGlade
-
-    MainFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
-
-private:
-    // begin wxGlade: MainFrame::methods
-    void set_properties();
-    void do_layout();
-    // end wxGlade
-
+class MainFrame: public VMainFrame {
 protected:
     std::vector<wxString> _words;
     DictType _dict;
     bool _isDictLoaded;
     AllWordsType _allWords;
     CharsTransType _transType;
-    // begin wxGlade: MainFrame::attributes
-    wxStaticText* label_1;
-    wxTextCtrl* tPath;
-    wxButton* btnPath;
-    wxTextCtrl* tOutput;
-    wxButton* btnGenerate;
-    wxStaticBitmap* bPreview;
-    // end wxGlade
-
-    DECLARE_EVENT_TABLE();
 
 public:
-    virtual void OnbtnPathClick(wxCommandEvent &event); 
-    virtual void OnbtnGenerateClick(wxCommandEvent &event); 
     void SetGridImage(GridType &grid, size_t w=400);
-}; // wxGlade: end class
 
+    MainFrame(
+        wxWindow* parent,
+        wxWindowID id = wxID_ANY,
+        const wxString& title = _("CrossGen"),
+        const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxSize( 700,500 ),
+        long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL )
+            : VMainFrame(parent){
+
+        _isDictLoaded = false;
+        srand(time(NULL));
+    }
+    virtual void onExitClick( wxCloseEvent& event ) { event.Skip(); }
+    virtual void onOpenGridClick( wxCommandEvent& event );
+    virtual void onGenerateClick( wxCommandEvent& event );
+    virtual void onExitClick( wxCommandEvent& event ) { event.Skip(); }
+    virtual void onAboutClick( wxCommandEvent& event ) { event.Skip(); }
+};
 
 #endif // WXGUI_HPP

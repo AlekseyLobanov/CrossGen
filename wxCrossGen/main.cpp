@@ -12,63 +12,10 @@
 #include "crossgen.hpp"
 #include "crossexport.hpp"
 
-#define wxID_PATH 1079
-#define wxID_GENERATE 1080
 
-MainFrame::MainFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
-    wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
-{
-    // begin wxGlade: MainFrame::MainFrame
-    label_1 = new wxStaticText(this, wxID_ANY, _("Путь к сетке:"));
-    tPath = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
-    btnPath = new wxButton(this, wxID_PATH, _("..."), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-    tOutput = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
-    btnGenerate = new wxButton(this, wxID_GENERATE, _("Генерировать кроссворд"));
-
-    set_properties();
-    do_layout();
-    
-    _isDictLoaded = false;
-    srand(time(NULL));
-}
-
-
-void MainFrame::set_properties() {
-    SetTitle(_("Генератор кроссвордов"));
-    SetSize(wxSize(700, 500));
-    SetMinSize(wxSize(600,340));
-}
-
-
-void MainFrame::do_layout() {
-    wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer* sizer_4 = new wxBoxSizer(wxHORIZONTAL);
-    wxBoxSizer* sizer_3 = new wxBoxSizer(wxHORIZONTAL);
-    wxBoxSizer* sizer_2 = new wxBoxSizer(wxHORIZONTAL);
-    sizer_2->Add(label_1, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
-    sizer_2->Add(tPath, 1, 0, 0);
-    sizer_2->Add(btnPath, 0, 0, 0);
-    sizer_1->Add(sizer_2, 0, wxEXPAND, 0);
-    sizer_3->Add(tOutput, 1, wxEXPAND, 0);
-    bPreview = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
-    sizer_3->Add(bPreview, 0, 0, 0);
-    sizer_1->Add(sizer_3, 1, wxEXPAND, 0);
-    sizer_4->Add(0, 0, 1, 0, 0);
-    sizer_4->Add(btnGenerate, 0, 0, 0);
-    sizer_1->Add(sizer_4, 0, wxEXPAND, 0);
-    SetSizer(sizer_1);
-    Layout();
-}
-
-
-BEGIN_EVENT_TABLE(MainFrame, wxFrame)
-    EVT_BUTTON(wxID_PATH, MainFrame::OnbtnPathClick)
-    EVT_BUTTON(wxID_GENERATE, MainFrame::OnbtnGenerateClick)
-END_EVENT_TABLE();
-
-void MainFrame::OnbtnPathClick(wxCommandEvent &event) {
-    wxFileDialog dlgOpen(this, wxT("Открыть файл кроссворда"), wxEmptyString, wxEmptyString,
-    wxT("Файлы кроссворда (*.cross)|*.cross"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+void MainFrame::onOpenGridClick(wxCommandEvent &event) {
+    wxFileDialog dlgOpen(this, _("Open crossword file"), wxEmptyString, wxEmptyString,
+    wxT("Files of crossword (*.cross)|*.cross"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     
     if ( dlgOpen.ShowModal() == wxID_CANCEL )
         return;
@@ -156,7 +103,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
     this->Refresh();
 }
 
-void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
+void MainFrame::onGenerateClick(wxCommandEvent &event) {
     if ( !_isDictLoaded ) {
         readDict(wxT("big_cross_ru.txt"), _dict);
         generateAllWords(_dict, _allWords, _transType);
@@ -227,7 +174,7 @@ bool MyApp::OnInit()
     m_locale.AddCatalog(wxT(APP_CATALOG));
 
     wxInitAllImageHandlers();
-    MainFrame* fMain = new MainFrame(NULL, wxID_ANY, wxEmptyString);
+    MainFrame* fMain = new MainFrame(NULL);
     SetTopWindow(fMain);
     fMain->Show();
     return true;

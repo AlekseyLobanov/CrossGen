@@ -60,7 +60,7 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/fbgui_fbgui.cpp$(ObjectSuffix) 
 
 
 
@@ -94,6 +94,14 @@ $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
 
 $(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) "main.cpp"
+
+$(IntermediateDirectory)/fbgui_fbgui.cpp$(ObjectSuffix): fbgui/fbgui.cpp $(IntermediateDirectory)/fbgui_fbgui.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/data/Sync/SyncProjects/CrossGen/wxCrossGen/fbgui/fbgui.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/fbgui_fbgui.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/fbgui_fbgui.cpp$(DependSuffix): fbgui/fbgui.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/fbgui_fbgui.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/fbgui_fbgui.cpp$(DependSuffix) -MM "fbgui/fbgui.cpp"
+
+$(IntermediateDirectory)/fbgui_fbgui.cpp$(PreprocessSuffix): fbgui/fbgui.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/fbgui_fbgui.cpp$(PreprocessSuffix) "fbgui/fbgui.cpp"
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

@@ -1,1 +1,1 @@
-../Release/main.cpp.o
+../Release/main.cpp.o ../Release/fbgui_fbgui.cpp.o
