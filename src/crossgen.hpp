@@ -11,13 +11,13 @@
 
 #include "crossbasetypes.hpp"
 
-const wxChar      CELL_CLEAR   = wxT('+');
-const wxChar      CELL_BORDER  = wxT('-');
-const TransedChar TRANS_CLEAR  = 0;
-const TransedChar TRANS_BORDER = 1;
-const uint32_t MAX_WORD_COUNT = 262144; // =2^18
+const wxChar      CELL_CLEAR     = wxT('+');
+const wxChar      CELL_BORDER    = wxT('-');
+const TransedChar TRANS_CLEAR    = 0;
+const TransedChar TRANS_BORDER   = 1;
+const uint32_t    MAX_WORD_COUNT = 262144; // =2^18
 
-void readDict(const wxString path, DictType &dict){
+void readDict(const wxString path, DictType &dict_out){
     wxTextFile f;
     f.Open(path);
     for ( wxString str = f.GetFirstLine(); !f.Eof(); str = f.GetNextLine() ) {
@@ -25,7 +25,7 @@ void readDict(const wxString path, DictType &dict){
         int del_ind = str.Index('-');
         key = str.Left(del_ind-1);
         val = str.Right(str.size() - del_ind - 2);
-        dict[key] = val;
+        dict_out[key] = val;
     }
     f.Close();
 };
@@ -106,7 +106,7 @@ void generateAllWords(const DictType &dict, AllWordsType &words_out,
     }
 }
 
-void generateWordInfo(const GridType &grid, std::vector<WordInfo> &winfos){
+void generateWordInfo(const GridType &grid, std::vector<WordInfo> &winfos_out){
     wxLogDebug(wxT("Printing grid: "));
     for (size_t i = 0; i < grid.size(); ++i){
         wxString st;
@@ -141,7 +141,7 @@ void generateWordInfo(const GridType &grid, std::vector<WordInfo> &winfos){
                         t.len    = cur_len;
                         t.ind    = cur_ind;
                         t.direct = false;
-                        winfos.push_back(t);
+                        winfos_out.push_back(t);
                     }
                 
                 if ( ((i ==0) ||  (grid.at(i - 1).at(j) != CELL_CLEAR)) &&
@@ -163,7 +163,7 @@ void generateWordInfo(const GridType &grid, std::vector<WordInfo> &winfos){
                         t.len    = cur_len;
                         t.ind    = cur_ind;
                         t.direct = true;
-                        winfos.push_back(t);
+                        winfos_out.push_back(t);
                     }
                 if ( exist ){
                     exist = false;
@@ -179,8 +179,14 @@ uint32_t getWordUniq(const T &w_ind, const T &w_len){
     return w_ind + w_len * MAX_WORD_COUNT;
 }
 
-bool procCross(UsedWords used, const AllWordsType &words, WorkGridType grid, 
-        const std::vector<WordInfo> &winfos, const size_t cur_word_ind, std::vector<TransedWord> &out){
+bool procCross(
+        UsedWords used,
+        const AllWordsType &words,
+        WorkGridType grid, 
+        const std::vector<WordInfo> &winfos,
+        const size_t cur_word_ind,
+        std::vector<TransedWord> &out
+){
     if (cur_word_ind == winfos.size())
         return true;
     WordInfo cur_wi = winfos.at(cur_word_ind);
