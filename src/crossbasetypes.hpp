@@ -28,4 +28,10 @@ struct WordInfo {
     bool direct;
 };
 
+struct FilledCrossword {
+    GridType grid;
+    std::vector< WordInfo > words;
+    std::vector< wxString > ans;
+};
+
 #endif // CROSSBASETYPES_HPP
