@@ -179,8 +179,8 @@ uint32_t getWordUniq(const T &w_ind, const T &w_len){
     return w_ind + w_len * MAX_WORD_COUNT;
 }
 
-bool procCross(UsedWords used, AllWordsType &words, WorkGridType grid, 
-        std::vector<WordInfo> &winfos, size_t cur_word_ind, std::vector<TransedWord> &out){
+bool procCross(UsedWords used, const AllWordsType &words, WorkGridType grid, 
+        const std::vector<WordInfo> &winfos, const size_t cur_word_ind, std::vector<TransedWord> &out){
     if (cur_word_ind == winfos.size())
         return true;
     WordInfo cur_wi = winfos.at(cur_word_ind);
@@ -230,10 +230,9 @@ bool procCross(UsedWords used, AllWordsType &words, WorkGridType grid,
     return false;
 }
 
-void generateCross(GridType &grid, const DictType &dict, std::vector<wxString> &words_out){
-    AllWordsType words;
-    CharsTransType trans_type;
-    generateAllWords(dict, words, trans_type);
+void generateCross(const GridType &grid, const AllWordsType &words, 
+    const CharsTransType &trans_type, std::vector<wxString> &words_out){
+    
     std::vector<WordInfo> winfos;
     generateWordInfo(grid, winfos);
     for (size_t i = 0; i < winfos.size(); ++i)

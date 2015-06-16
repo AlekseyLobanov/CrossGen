@@ -63,8 +63,11 @@ int main(int argc, char **argv) {
     std::vector< wxString > words_out;
     DictType dict;
     GridType grid;
+    AllWordsType all_words;
+    CharsTransType trans_type;
     
     readDict(dict_path, dict);
+    generateAllWords(dict, all_words, trans_type);
     readGrid(grid_path, grid);
     
     if ( is_rand )
@@ -75,7 +78,7 @@ int main(int argc, char **argv) {
             srand(42);
         words_out.clear();
         durs.at(i) = wxGetLocalTimeMillis();
-        generateCross(grid,dict,words_out);
+        generateCross(grid,all_words,trans_type,words_out);
         if ( words_out.size() == 0 )
             wxPrintf(wxT("Error in creating #%i!\n"),i+1);
         durs.at(i) = wxGetLocalTimeMillis() - durs.at(i);

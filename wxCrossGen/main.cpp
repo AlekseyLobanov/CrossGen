@@ -159,6 +159,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
 void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
     if ( !_isDictLoaded ) {
         readDict(wxT("big_cross_ru.txt"), _dict);
+        generateAllWords(_dict, _allWords, _transType);
         _isDictLoaded = true;
     }
     
@@ -170,7 +171,7 @@ void MainFrame::OnbtnGenerateClick(wxCommandEvent &event) {
     }
     readGrid(tPath->GetValue(), grid);
     try{
-        generateCross(grid,_dict,words_out);
+        generateCross(grid, _allWords, _transType, words_out);
         
         _words.clear();
         _words = words_out;
