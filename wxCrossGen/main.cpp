@@ -15,7 +15,7 @@
 
 void MainFrame::onOpenGridClick(wxCommandEvent &event) {
     wxFileDialog dlgOpen(this, _("Open crossword file"), wxEmptyString, wxEmptyString,
-    wxT("Files of crossword (*.cross)|*.cross"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    _("Files of crossword (*.cross)|*.cross"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     
     if ( dlgOpen.ShowModal() == wxID_CANCEL )
         return;
@@ -23,7 +23,7 @@ void MainFrame::onOpenGridClick(wxCommandEvent &event) {
     // this can be done with e.g. wxWidgets input streams:
     wxFileInputStream input_stream(dlgOpen.GetPath());
     if ( !input_stream.IsOk() ) {
-        wxLogError(wxT("Cannot open file ")+dlgOpen.GetPath());
+        wxLogError(_("Cannot open file ")+dlgOpen.GetPath());
         return;
     }
     tPath->SetValue(dlgOpen.GetPath());
@@ -114,7 +114,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
     std::vector<wxString> words_out;
     GridType grid;
     if (tPath->GetValue() == wxEmptyString){
-        wxMessageBox( wxT("Не указана путь к сетке"), wxT("Инфо"), wxICON_INFORMATION);
+        wxMessageBox( _("Path to grid is empty"), _("Info"), wxICON_INFORMATION);
         return;
     }
     readGrid(tPath->GetValue(), grid);
@@ -129,7 +129,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         
         tOutput->Clear();
         
-        tOutput->AppendText(wxT("По вертикали:\n"));
+        tOutput->AppendText(_("Vertical words:\n"));
         
         for (size_t i = 0; i < words_out.size(); ++i){
             if (winfos.at(i).direct == false)
@@ -137,7 +137,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
                   + _dict[words_out.at(i)] +wxT("\n"));
         }
         
-        tOutput->AppendText(wxT("По горизонтали:\n"));
+        tOutput->AppendText(_("Horisontal words:\n"));
         
         for (size_t i = 0; i < words_out.size(); ++i){
             if (winfos.at(i).direct == true)
@@ -151,7 +151,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
     }
     catch ( ... ){
         tOutput->Clear();
-        wxMessageBox( wxT("Не могу создать кроссворд"), wxT("Ошибка"), wxICON_ERROR );
+        wxMessageBox( _("Cannot generate crossword"), _("Error"), wxICON_ERROR );
     }
     this->Refresh();
 }
