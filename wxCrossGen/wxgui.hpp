@@ -20,11 +20,12 @@
 
 class MainFrame: public VMainFrame {
 protected:
-    std::vector<wxString> _words;
+    std::vector<wxString> _ans;
     DictType _dict;
     bool _isDictLoaded;
     AllWordsType _allWords;
     CharsTransType _transType;
+    GridType _grid;
 
 public:
     void SetGridImage(GridType &grid, size_t w=400);
@@ -41,11 +42,12 @@ public:
         _isDictLoaded = false;
         srand(time(NULL));
     }
-    virtual void onExitClick( wxCloseEvent& event ) { event.Skip(); }
-    virtual void onOpenGridClick( wxCommandEvent& event );
-    virtual void onGenerateClick( wxCommandEvent& event );
-    virtual void onExitClick( wxCommandEvent& event ) { event.Skip(); }
-    virtual void onAboutClick( wxCommandEvent& event ) { event.Skip(); }
+    void onExitClick( wxCloseEvent& event ) { event.Skip(); }
+    void onOpenGridClick( wxCommandEvent& event );
+    void onGenerateClick( wxCommandEvent& event );
+    void onExportClick( wxCommandEvent& event );
+    void onExitClick( wxCommandEvent& event ) { event.Skip(); }
+    void onAboutClick( wxCommandEvent& event ) { event.Skip(); }
 };
 
 #endif // WXGUI_HPP

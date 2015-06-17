@@ -20,8 +20,12 @@ VMainFrame::VMainFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	miFile->Append( miOpenGrid );
 	
 	wxMenuItem* miGenerate;
-	miGenerate = new wxMenuItem( miFile, wxID_ANY, wxString( _("&Generate") ) , wxEmptyString, wxITEM_NORMAL );
+	miGenerate = new wxMenuItem( miFile, wxID_EXECUTE, wxString( _("&Generate") ) , wxEmptyString, wxITEM_NORMAL );
 	miFile->Append( miGenerate );
+	
+	wxMenuItem* miExport;
+	miExport = new wxMenuItem( miFile, wxID_EXPORT, wxString( _("&Export") ) , wxEmptyString, wxITEM_NORMAL );
+	miFile->Append( miExport );
 	
 	wxMenuItem* miExit;
 	miExit = new wxMenuItem( miFile, wxID_EXIT, wxString( _("E&xit") ) + wxT('\t') + wxT("Ctrl+Q"), wxEmptyString, wxITEM_NORMAL );
@@ -48,7 +52,7 @@ VMainFrame::VMainFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	bSizer4->Add( tPath, 1, wxEXPAND|wxLEFT|wxTOP, 5 );
 	
 	bPath = new wxButton( this, wxID_ANY, _("..."), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
-	bSizer4->Add( bPath, 0, wxALL, 5 );
+	bSizer4->Add( bPath, 0, wxALIGN_BOTTOM|wxALIGN_LEFT|wxALIGN_RIGHT, 5 );
 	
 	bSizer2->Add( bSizer4, 0, wxEXPAND, 5 );
 	
@@ -81,6 +85,7 @@ VMainFrame::VMainFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( VMainFrame::onExitClick ) );
 	this->Connect( miOpenGrid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onOpenGridClick ) );
 	this->Connect( miGenerate->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onGenerateClick ) );
+	this->Connect( miExport->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExportClick ) );
 	this->Connect( miExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExitClick ) );
 	this->Connect( miAbout->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onAboutClick ) );
 	bPath->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( VMainFrame::onOpenGridClick ), NULL, this );
@@ -93,6 +98,7 @@ VMainFrame::~VMainFrame()
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( VMainFrame::onExitClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onOpenGridClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onGenerateClick ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExportClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExitClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onAboutClick ) );
 	bPath->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( VMainFrame::onOpenGridClick ), NULL, this );

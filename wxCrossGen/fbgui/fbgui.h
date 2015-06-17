@@ -27,6 +27,8 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
+#define wxID_EXECUTE 1000
+#define wxID_EXPORT 1001
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class VMainFrame
@@ -50,6 +52,7 @@ class VMainFrame : public wxFrame
 		virtual void onExitClick( wxCloseEvent& event ) { event.Skip(); }
 		virtual void onOpenGridClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onGenerateClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onExportClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onExitClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onAboutClick( wxCommandEvent& event ) { event.Skip(); }
 		

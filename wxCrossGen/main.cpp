@@ -27,9 +27,8 @@ void MainFrame::onOpenGridClick(wxCommandEvent &event) {
         return;
     }
     tPath->SetValue(dlgOpen.GetPath());
-    GridType grid;
-    readGrid(tPath->GetValue(), grid);
-    SetGridImage(grid);
+    readGrid(tPath->GetValue(), _grid);
+    SetGridImage(_grid);
 }
 
 void MainFrame::SetGridImage(GridType &grid, size_t w) {
@@ -62,7 +61,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
         dc.DrawText(wxString::Format(wxT("%d"),winfos.at(i).ind), sq_w*winfos.at(i).x, sq_h*winfos.at(i).y);
     }
     
-    if ( _words.size() > 0 ) {
+    if ( _ans.size() > 0 ) {
         using std::vector;
         vector< vector< bool > > usedCells(
             grid.size(), 
@@ -76,7 +75,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
                 for (size_t j = 0; j < winfos.at(i).len; ++j)
                     if ( !usedCells.at(winfos.at(i).x+j).at(winfos.at(i).y) ) {
                         dc.DrawText(
-                            _words.at(i).at(j),
+                            _ans.at(i).at(j),
                             sq_w*(winfos.at(i).x+j) + sq_w*0.24,
                             sq_h*winfos.at(i).y
                         );
@@ -86,7 +85,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
                 for (size_t j = 0; j < winfos.at(i).len; ++j)
                     if ( !usedCells.at(winfos.at(i).x).at(winfos.at(i).y+j) ) {
                         dc.DrawText(
-                            _words.at(i).at(j),
+                            _ans.at(i).at(j),
                             sq_w*winfos.at(i).x + sq_w*0.24,
                             sq_h*(winfos.at(i).y+j)
                         );
@@ -112,20 +111,17 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
     }
     
     std::vector<wxString> words_out;
-    GridType grid;
-    if (tPath->GetValue() == wxEmptyString){
-        wxMessageBox( _("Path to grid is empty"), _("Info"), wxICON_INFORMATION);
+    if ( _dict.size() == 0 ){
+        wxMessageBox( _("Crossword grid isn't loaded!"), _("Info"), wxICON_INFORMATION);
         return;
     }
-    readGrid(tPath->GetValue(), grid);
     try{
-        generateCross(grid, _allWords, _transType, words_out);
+        generateCross(_grid, _allWords, _transType, words_out);
         
-        _words.clear();
-        _words = words_out;
+        _ans = words_out;
         
         std::vector<WordInfo> winfos;
-        generateWordInfo(grid, winfos);
+        generateWordInfo(_grid, winfos);
         
         tOutput->Clear();
         
@@ -146,8 +142,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         }
         if (winfos.size() == 0) 
             throw 42;
-        SetGridImage(grid);
-        _words.clear();
+        SetGridImage(_grid);
     }
     catch ( ... ){
         tOutput->Clear();
@@ -156,6 +151,25 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
     this->Refresh();
 }
 
+void MainFrame::onExportClick(wxCommandEvent& event) {
+    if ( _grid.size() == 0 ) {
+        wxMessageBox( _("Grid isn't loaded now"), _("Info"), wxICON_INFORMATION );
+        return;
+    }
+     wxFileDialog dlgSave(this, _("Exporting crossword"), wxEmptyString, wxEmptyString,
+        _("txt files (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    if (dlgSave.ShowModal() == wxID_CANCEL)
+        return;
+    FilledCrossword t_cross;
+    t_cross.grid = _grid;
+    t_cross.ans  = _ans;
+    generateWordInfo(_grid, t_cross.words);
+    if ( !exportToFile(t_cross, true, dlgSave.GetPath()) ){
+        wxLogError(wxT("Cannot save current contents in file '%s'."), dlgSave.GetPath().GetData());
+        return;
+    }
+    wxLogDebug(wxT("Exporting to ") + dlgSave.GetPath() + wxT("is complete"));
+}
 
 class MyApp: public wxApp {
 public:
