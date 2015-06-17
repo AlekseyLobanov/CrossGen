@@ -18,13 +18,13 @@ void fillCross(FilledCrossword &cross){
     }
 }
 
-void exportToString(const FilledCrossword &cross, const bool prn_ans,
-    wxString &str_out, wxChar space = wxT('-')){
+void exportToString(const FilledCrossword &cross, wxString &str_out, wxChar space = wxT('-')){
+    const wxString LINE_END = wxTextFile::GetEOL();
+    
     FilledCrossword t_cross(cross);
-    if ( prn_ans && (t_cross.ans.size() != 0) ) {
+    if ( t_cross.ans.size() != 0 ) {
         fillCross(t_cross);
     }
-    wxLogDebug(wxT("3"));
     for (size_t i = 0; i < t_cross.grid.at(0).size(); ++i){
         wxString cur_line;
         for (size_t j = 0; j < t_cross.grid.size(); ++j){
@@ -33,20 +33,37 @@ void exportToString(const FilledCrossword &cross, const bool prn_ans,
             else
                 cur_line += t_cross.grid.at(j).at(i);
         }
-        cur_line += wxTextFile::GetEOL();
+        cur_line += LINE_END;
         
         str_out += cur_line;
     }
+    if ( cross.ques.size() != 0 ) { // == print questions
+        str_out += _("Vertical words:") + LINE_END;
+            
+        for (size_t i = 0; i < cross.words.size(); ++i){
+            if (cross.words.at(i).direct == false)
+                str_out += wxString::Format(wxT("%d. "), cross.words.at(i).ind) 
+                  + cross.ques.at(i) + LINE_END;
+        }
+        
+        str_out += _("Horisontal words:") + LINE_END;
+        
+        for (size_t i = 0; i < cross.words.size(); ++i){
+            if (cross.words.at(i).direct == true)
+                str_out += wxString::Format(wxT("%d. "), cross.words.at(i).ind) 
+                  + cross.ques.at(i) + LINE_END;
+        }
+    }
 }
 
-bool exportToFile(const FilledCrossword &cross, const bool prn_ans, const wxString path){
+bool exportToFile(const FilledCrossword &cross, const wxString path){
     wxTextFile f(path);
     if ( f.Exists() )
         return false;
     f.Create();
     f.Open(path);
     wxString cont;
-    exportToString(cross, prn_ans, cont);
+    exportToString(cross, cont);
     f.AddLine(cont);
     f.Write();
     f.Close();

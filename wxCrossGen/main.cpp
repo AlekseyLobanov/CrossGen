@@ -123,6 +123,10 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         std::vector<WordInfo> winfos;
         generateWordInfo(_grid, winfos);
         
+        _ques.clear();
+        for (size_t i = 0; i < words_out.size(); ++i)
+            _ques.push_back(_dict[words_out.at(i)]);
+        
         tOutput->Clear();
         
         tOutput->AppendText(_("Vertical words:\n"));
@@ -130,7 +134,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         for (size_t i = 0; i < words_out.size(); ++i){
             if (winfos.at(i).direct == false)
                 tOutput->AppendText(wxString::Format(wxT("%d. "), winfos.at(i).ind) 
-                  + _dict[words_out.at(i)] +wxT("\n"));
+                  + _ques.at(i) + wxT("\n"));
         }
         
         tOutput->AppendText(_("Horisontal words:\n"));
@@ -138,7 +142,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         for (size_t i = 0; i < words_out.size(); ++i){
             if (winfos.at(i).direct == true)
                 tOutput->AppendText(wxString::Format(wxT("%d. "), winfos.at(i).ind) 
-                  + _dict[words_out.at(i)]+wxT("\n"));
+                  + _ques.at(i) + wxT("\n"));
         }
         if (winfos.size() == 0) 
             throw 42;
@@ -163,12 +167,13 @@ void MainFrame::onExportClick(wxCommandEvent& event) {
     FilledCrossword t_cross;
     t_cross.grid = _grid;
     t_cross.ans  = _ans;
+    t_cross.ques = _ques;
     generateWordInfo(_grid, t_cross.words);
-    if ( !exportToFile(t_cross, true, dlgSave.GetPath()) ){
+    if ( !exportToFile(t_cross, dlgSave.GetPath()) ){
         wxLogError(wxT("Cannot save current contents in file '%s'."), dlgSave.GetPath().GetData());
         return;
     }
-    wxLogDebug(wxT("Exporting to ") + dlgSave.GetPath() + wxT("is complete"));
+    wxLogDebug(wxT("Exporting to ") + dlgSave.GetPath() + wxT(" is complete"));
 }
 
 class MyApp: public wxApp {

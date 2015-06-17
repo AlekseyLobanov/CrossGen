@@ -31,6 +31,7 @@ struct WordInfo {
 struct FilledCrossword {
     GridType grid;
     std::vector< WordInfo > words;
+    std::vector< wxString > ques;
     std::vector< wxString > ans;
 };
 

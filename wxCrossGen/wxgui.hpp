@@ -21,11 +21,12 @@
 class MainFrame: public VMainFrame {
 protected:
     std::vector<wxString> _ans;
-    DictType _dict;
-    bool _isDictLoaded;
-    AllWordsType _allWords;
-    CharsTransType _transType;
-    GridType _grid;
+    std::vector<wxString> _ques;
+    DictType              _dict;
+    bool                  _isDictLoaded;
+    AllWordsType          _allWords;
+    CharsTransType        _transType;
+    GridType              _grid;
 
 public:
     void SetGridImage(GridType &grid, size_t w=400);
