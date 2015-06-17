@@ -174,6 +174,8 @@ bool MyApp::OnInit()
 #endif
     m_locale.AddCatalog(wxT(APP_CATALOG));
 
+    SetAppName(wxT("CrossGen"));
+    
     wxInitAllImageHandlers();
     MainFrame* fMain = new MainFrame(NULL);
     SetTopWindow(fMain);
