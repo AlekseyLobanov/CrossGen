@@ -18,42 +18,54 @@ void fillCross(FilledCrossword &cross){
     }
 }
 
-void exportToString(const FilledCrossword &cross, wxString &str_out, wxChar space = wxT('-')){
+wxString getGridString(const FilledCrossword &cross, wxChar space = wxT('-')){
     const wxString LINE_END = wxTextFile::GetEOL();
+    
+    wxString t_string;
     
     FilledCrossword t_cross(cross);
     if ( t_cross.ans.size() != 0 ) {
         fillCross(t_cross);
     }
     for (size_t i = 0; i < t_cross.grid.at(0).size(); ++i){
-        wxString cur_line;
         for (size_t j = 0; j < t_cross.grid.size(); ++j){
             if ( t_cross.grid.at(j).at(i) == CELL_BORDER )
-                cur_line += space;
+                t_string += space;
             else
-                cur_line += t_cross.grid.at(j).at(i);
+                t_string += t_cross.grid.at(j).at(i);
         }
-        cur_line += LINE_END;
-        
-        str_out += cur_line;
+        t_string += LINE_END;
     }
+    return t_string;
+}
+
+wxString getQuesString(const FilledCrossword &cross){
+    const wxString LINE_END = wxTextFile::GetEOL();
+    
+    wxString t_string;
+    
     if ( cross.ques.size() != 0 ) { // == print questions
-        str_out += _("Vertical words:") + LINE_END;
+        t_string += _("Vertical words:") + LINE_END;
             
         for (size_t i = 0; i < cross.words.size(); ++i){
             if (cross.words.at(i).direct == false)
-                str_out += wxString::Format(wxT("%d. "), cross.words.at(i).ind) 
+                t_string += wxString::Format(wxT("%d. "), cross.words.at(i).ind) 
                   + cross.ques.at(i) + LINE_END;
         }
         
-        str_out += _("Horisontal words:") + LINE_END;
+        t_string += _("Horisontal words:") + LINE_END;
         
         for (size_t i = 0; i < cross.words.size(); ++i){
             if (cross.words.at(i).direct == true)
-                str_out += wxString::Format(wxT("%d. "), cross.words.at(i).ind) 
+                t_string += wxString::Format(wxT("%d. "), cross.words.at(i).ind) 
                   + cross.ques.at(i) + LINE_END;
         }
     }
+    return t_string;
+}
+
+void exportToString(const FilledCrossword &cross, wxString &str_out, wxChar space = wxT('-')){
+    str_out += getGridString(cross, space) + getQuesString(cross);
 }
 
 bool exportToFile(const FilledCrossword &cross, const wxString path){

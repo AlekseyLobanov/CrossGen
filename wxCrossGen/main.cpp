@@ -27,7 +27,15 @@ void MainFrame::onOpenGridClick(wxCommandEvent &event) {
         return;
     }
     tPath->SetValue(dlgOpen.GetPath());
+    
+    // Clearing
+    _grid.clear();
+    _ques.clear();
+    _ans.clear();
+    tOutput->Clear();
+    
     readGrid(tPath->GetValue(), _grid);
+    
     SetGridImage(_grid);
 }
 
@@ -129,21 +137,14 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         
         tOutput->Clear();
         
-        tOutput->AppendText(_("Vertical words:\n"));
+        FilledCrossword t_cross;
+        t_cross.words = winfos;
+        t_cross.grid  = _grid;
+        t_cross.ans   = _ans;
+        t_cross.ques  = _ques;
         
-        for (size_t i = 0; i < words_out.size(); ++i){
-            if (winfos.at(i).direct == false)
-                tOutput->AppendText(wxString::Format(wxT("%d. "), winfos.at(i).ind) 
-                  + _ques.at(i) + wxT("\n"));
-        }
+        tOutput->AppendText(getQuesString(t_cross));
         
-        tOutput->AppendText(_("Horisontal words:\n"));
-        
-        for (size_t i = 0; i < words_out.size(); ++i){
-            if (winfos.at(i).direct == true)
-                tOutput->AppendText(wxString::Format(wxT("%d. "), winfos.at(i).ind) 
-                  + _ques.at(i) + wxT("\n"));
-        }
         if (winfos.size() == 0) 
             throw 42;
         SetGridImage(_grid);
