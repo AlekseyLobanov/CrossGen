@@ -23,7 +23,7 @@ void MainFrame::onOpenGridClick(wxCommandEvent &event) {
     // this can be done with e.g. wxWidgets input streams:
     wxFileInputStream input_stream(dlgOpen.GetPath());
     if ( !input_stream.IsOk() ) {
-        wxLogError(_("Cannot open file ")+dlgOpen.GetPath());
+        wxLogError(_("Cannot open file ") + dlgOpen.GetPath());
         return;
     }
     tPath->SetValue(dlgOpen.GetPath());
@@ -175,6 +175,10 @@ void MainFrame::onExportClick(wxCommandEvent& event) {
         return;
     }
     wxLogDebug(wxT("Exporting to ") + dlgSave.GetPath() + wxT(" is complete"));
+}
+
+void MainFrame::onPreferencesClick( wxCommandEvent& event ){
+    
 }
 
 class MyApp: public wxApp {

@@ -53,6 +53,7 @@ class VMainFrame : public wxFrame
 		virtual void onOpenGridClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onGenerateClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onExportClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onPreferencesClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onExitClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onAboutClick( wxCommandEvent& event ) { event.Skip(); }
 		

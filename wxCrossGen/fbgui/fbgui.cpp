@@ -27,6 +27,10 @@ VMainFrame::VMainFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	miExport = new wxMenuItem( miFile, wxID_EXPORT, wxString( _("&Export") ) , wxEmptyString, wxITEM_NORMAL );
 	miFile->Append( miExport );
 	
+	wxMenuItem* miPreferences;
+	miPreferences = new wxMenuItem( miFile, wxID_PREFERENCES, wxString( _("&Preferences ") ) , wxEmptyString, wxITEM_NORMAL );
+	miFile->Append( miPreferences );
+	
 	wxMenuItem* miExit;
 	miExit = new wxMenuItem( miFile, wxID_EXIT, wxString( _("E&xit") ) + wxT('\t') + wxT("Ctrl+Q"), wxEmptyString, wxITEM_NORMAL );
 	miFile->Append( miExit );
@@ -86,6 +90,7 @@ VMainFrame::VMainFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	this->Connect( miOpenGrid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onOpenGridClick ) );
 	this->Connect( miGenerate->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onGenerateClick ) );
 	this->Connect( miExport->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExportClick ) );
+	this->Connect( miPreferences->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onPreferencesClick ) );
 	this->Connect( miExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExitClick ) );
 	this->Connect( miAbout->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onAboutClick ) );
 	bPath->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( VMainFrame::onOpenGridClick ), NULL, this );
@@ -99,6 +104,7 @@ VMainFrame::~VMainFrame()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onOpenGridClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onGenerateClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExportClick ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onPreferencesClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExitClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onAboutClick ) );
 	bPath->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( VMainFrame::onOpenGridClick ), NULL, this );

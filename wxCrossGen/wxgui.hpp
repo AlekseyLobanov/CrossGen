@@ -45,6 +45,7 @@ public:
     void onExitClick( wxCloseEvent& event ) { event.Skip(); }
     void onOpenGridClick( wxCommandEvent& event );
     void onGenerateClick( wxCommandEvent& event );
+    void onPreferencesClick( wxCommandEvent& event );
     void onExportClick( wxCommandEvent& event );
     void onExitClick( wxCommandEvent& event ) { event.Skip(); }
     void onAboutClick( wxCommandEvent& event ) {
