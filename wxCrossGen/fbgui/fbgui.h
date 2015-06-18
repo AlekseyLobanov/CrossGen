@@ -24,6 +24,8 @@
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
 #include <wx/frame.h>
+#include <wx/stattext.h>
+#include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -53,7 +55,7 @@ class VMainFrame : public wxFrame
 		virtual void onOpenGridClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onGenerateClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onExportClick( wxCommandEvent& event ) { event.Skip(); }
-		virtual void onPreferencesClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onSettingsClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onExitClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onAboutClick( wxCommandEvent& event ) { event.Skip(); }
 		
@@ -62,6 +64,36 @@ class VMainFrame : public wxFrame
 		
 		VMainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("CrossGen"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 700,500 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		~VMainFrame();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class VSettingsDialog
+///////////////////////////////////////////////////////////////////////////////
+class VSettingsDialog : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxStaticText* m_staticText1;
+		
+		wxTextCtrl* tDictPath;
+		wxButton* bDictPath;
+		
+		
+		wxButton* bCancel;
+		wxButton* bOk;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void onDictPathClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onCancelClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onOkClick( wxCommandEvent& event ) { event.Skip(); }
+		
+	
+	public:
+		
+		VSettingsDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 426,224 ), long style = wxDEFAULT_DIALOG_STYLE );
+		~VSettingsDialog();
 	
 };
 

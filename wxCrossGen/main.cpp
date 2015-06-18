@@ -177,7 +177,7 @@ void MainFrame::onExportClick(wxCommandEvent& event) {
     wxLogDebug(wxT("Exporting to ") + dlgSave.GetPath() + wxT(" is complete"));
 }
 
-void MainFrame::onPreferencesClick( wxCommandEvent& event ){
+void MainFrame::onSettingsClick( wxCommandEvent& event ){
     
 }
 
