@@ -45,8 +45,8 @@ class VMainFrame : public wxFrame
 		wxMenu* miHelp;
 		wxTextCtrl* tPath;
 		wxButton* bPath;
-		wxTextCtrl* tOutput;
 		wxStaticBitmap* bPreview;
+		wxTextCtrl* tOutput;
 		
 		wxButton* bGenerate;
 		

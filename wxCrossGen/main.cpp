@@ -112,6 +112,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
     }
     
     bPreview->SetBitmap(bmp);
+    bPreview->Show();
     
     dc.SelectObject( wxNullBitmap );
     

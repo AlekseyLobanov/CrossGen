@@ -63,11 +63,13 @@ VMainFrame::VMainFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
 	
+	bPreview = new wxStaticBitmap( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	bPreview->Hide();
+	
+	bSizer3->Add( bPreview, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxTOP, 5 );
+	
 	tOutput = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP );
 	bSizer3->Add( tOutput, 1, wxALL|wxEXPAND, 5 );
-	
-	bPreview = new wxStaticBitmap( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer3->Add( bPreview, 0, wxALL, 5 );
 	
 	bSizer2->Add( bSizer3, 1, wxEXPAND, 5 );
 	
