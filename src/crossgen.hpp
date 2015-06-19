@@ -199,14 +199,12 @@ bool procCross(
         TransedWord cur_word = words.at(cur_len).at((icw + rand_add) % cur_words_size);
         // Показывает, можно ли записать это слово в сетку
         bool can_write = true;
-        if (cur_wi.direct == false){
+        if ( cur_wi.direct == false ){
             for (size_t j = 0; j < cur_wi.len; ++j)
                 if ((grid.at(cur_wi.x).at(j + cur_wi.y) != TRANS_CLEAR) &&
                     (grid.at(cur_wi.x).at(j + cur_wi.y) != cur_word.at(j)))
                     can_write = false;
-        }
-        
-        if (cur_wi.direct == true){
+        } else {
             for (size_t j = 0; j < cur_wi.len; ++j)
                 if ((grid.at(cur_wi.x + j).at(cur_wi.y) != TRANS_CLEAR) &&
                    (grid.at(cur_wi.x + j).at(cur_wi.y) != cur_word.at(j)))

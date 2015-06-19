@@ -24,7 +24,7 @@ wxString getGridString(const FilledCrossword &cross, wxChar space = wxT('-')){
     wxString t_string;
     
     FilledCrossword t_cross(cross);
-    if ( t_cross.ans.size() != 0 ) {
+    if ( !t_cross.ans.empty() ) {
         fillCross(t_cross);
     }
     for (size_t i = 0; i < t_cross.grid.at(0).size(); ++i){
@@ -44,7 +44,7 @@ wxString getQuesString(const FilledCrossword &cross){
     
     wxString t_string;
     
-    if ( cross.ques.size() != 0 ) { // == print questions
+    if ( !cross.ques.empty() ) { // == print questions
         t_string += _("Vertical words:") + LINE_END;
             
         for (size_t i = 0; i < cross.words.size(); ++i){
