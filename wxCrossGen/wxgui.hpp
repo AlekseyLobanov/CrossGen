@@ -34,6 +34,10 @@ public:
     void procDict(wxString path);
     
     MainFrame( wxWindow* parent): VMainFrame(parent) {
+        // Hack for better background
+        #ifdef __WINDOWS__
+        SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+        #endif
         _isDictLoaded = false;
         srand(time(NULL));
     }
