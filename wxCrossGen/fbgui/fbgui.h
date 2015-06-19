@@ -92,7 +92,7 @@ class VSettingsDialog : public wxDialog
 	
 	public:
 		
-		VSettingsDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 426,224 ), long style = wxDEFAULT_DIALOG_STYLE );
+		VSettingsDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 425,120 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~VSettingsDialog();
 	
 };

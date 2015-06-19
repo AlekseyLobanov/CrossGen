@@ -8,9 +8,11 @@
 #include <wx/intl.h>
 #include <wx/aboutdlg.h>
 
-#include "crossgen.hpp"
-
 #include "fbgui/fbgui.h"
+
+#include "crossgen.hpp"
+#include "fsettings.hpp"
+
 
 #ifndef APP_CATALOG
 #define APP_CATALOG "app"  // replace with the appropriate catalog name
@@ -29,28 +31,23 @@ protected:
 
 public:
     void SetGridImage(GridType &grid, size_t w=400);
-
-    MainFrame(
-        wxWindow* parent,
-        wxWindowID id = wxID_ANY,
-        const wxString& title = _("CrossGen"),
-        const wxPoint& pos = wxDefaultPosition,
-        const wxSize& size = wxSize( 700,500 ),
-        long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL )
-            : VMainFrame(parent){
-
+    void procDict(wxString path);
+    
+    MainFrame( wxWindow* parent): VMainFrame(parent) {
         _isDictLoaded = false;
         srand(time(NULL));
     }
     void onExitClick( wxCloseEvent& event ) { event.Skip(); }
     void onOpenGridClick( wxCommandEvent& event );
     void onGenerateClick( wxCommandEvent& event );
-    void onPreferencesClick( wxCommandEvent& event );
+    void onSettingsClick( wxCommandEvent& event );
     void onExportClick( wxCommandEvent& event );
-    void onExitClick( wxCommandEvent& event ) { event.Skip(); }
+    void onExitClick( wxCommandEvent& event ) {
+        Close();
+    }
     void onAboutClick( wxCommandEvent& event ) {
         wxAboutDialogInfo info;
-        info.AddDeveloper(_("AlekseyLobanov"));
+        info.AddDeveloper(_("Aleksey Lobanov"));
         info.SetDescription(_("Simple GUI cross-generation application. Yet another bike"));
         info.SetName(wxTheApp->GetAppName());
         info.SetWebSite(wxT("http://likemath.ru"));

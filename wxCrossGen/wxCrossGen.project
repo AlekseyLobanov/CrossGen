@@ -28,6 +28,8 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
     <File Name="wxgui.hpp"/>
+    <File Name="fsettings.hpp"/>
+    <File Name="settingsconsts.hpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Shared">
     <File Name="../src/crossgen.hpp"/>

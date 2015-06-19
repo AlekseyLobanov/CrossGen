@@ -123,7 +123,7 @@ VSettingsDialog::VSettingsDialog( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	m_staticText1 = new wxStaticText( this, wxID_ANY, _("Dict path:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText1->Wrap( -1 );
-	bSizer6->Add( m_staticText1, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer6->Add( m_staticText1, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxLEFT, 5 );
 	
 	
 	bSizer6->Add( 0, 0, 1, wxEXPAND, 5 );

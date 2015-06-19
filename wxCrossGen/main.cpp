@@ -7,11 +7,21 @@
 #include <wx/wx.h>
 #include <wx/wfstream.h>
 #include <wx/textfile.h>
+#include <wx/fileconf.h>
 #include "wxgui.hpp"
 
 #include "crossgen.hpp"
 #include "crossexport.hpp"
+#include "settingsconsts.hpp"
 
+void MainFrame::procDict(wxString path){
+    _dict.clear();
+    _allWords.clear();
+    _transType.clear();
+    readDict(path, _dict);
+    generateAllWords(_dict, _allWords, _transType);
+    _isDictLoaded = true;
+}
 
 void MainFrame::onOpenGridClick(wxCommandEvent &event) {
     wxFileDialog dlgOpen(this, _("Open crossword file"), wxEmptyString, wxEmptyString,
@@ -19,11 +29,9 @@ void MainFrame::onOpenGridClick(wxCommandEvent &event) {
     
     if ( dlgOpen.ShowModal() == wxID_CANCEL )
         return;
-    // proceed loading the file chosen by the user;
-    // this can be done with e.g. wxWidgets input streams:
     wxFileInputStream input_stream(dlgOpen.GetPath());
     if ( !input_stream.IsOk() ) {
-        wxLogError(_("Cannot open file ") + dlgOpen.GetPath());
+        wxMessageBox(_("Cannot open file ") + dlgOpen.GetPath(), _("Error"), wxICON_ERROR );
         return;
     }
     tPath->SetValue(dlgOpen.GetPath());
@@ -112,10 +120,9 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
 }
 
 void MainFrame::onGenerateClick(wxCommandEvent &event) {
+    auto config = wxConfigBase::Get();
     if ( !_isDictLoaded ) {
-        readDict(wxT("big_cross_ru.txt"), _dict);
-        generateAllWords(_dict, _allWords, _transType);
-        _isDictLoaded = true;
+        procDict(config->Read(SETTINGS_KEY_DICT_PATH, SETTINGS_DEFAULT_DICTPATH));
     }
     
     std::vector<wxString> words_out;
@@ -123,7 +130,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         wxMessageBox( _("Crossword grid isn't loaded!"), _("Info"), wxICON_INFORMATION);
         return;
     }
-    try{
+    try {
         generateCross(_grid, _allWords, _transType, words_out);
         
         _ans = words_out;
@@ -178,7 +185,15 @@ void MainFrame::onExportClick(wxCommandEvent& event) {
 }
 
 void MainFrame::onSettingsClick( wxCommandEvent& event ){
-    
+    SettingsDialog fSettings(this);
+    auto *config = wxConfigBase::Get();
+    fSettings.setDictPath(config->Read(SETTINGS_KEY_DICT_PATH, SETTINGS_DEFAULT_DICTPATH));
+    if ( fSettings.ShowModal() == wxID_OK ){
+        if ( config->Read(SETTINGS_KEY_DICT_PATH, SETTINGS_DEFAULT_DICTPATH) != fSettings.getDictPath() ) {
+            config->Write(SETTINGS_KEY_DICT_PATH, fSettings.getDictPath());
+            procDict(fSettings.getDictPath());
+        }
+    }
 }
 
 class MyApp: public wxApp {
@@ -201,6 +216,8 @@ bool MyApp::OnInit()
     SetAppName(wxT("CrossGen"));
     
     wxInitAllImageHandlers();
+    wxConfigBase *config = new wxFileConfig;
+    wxConfigBase::Set(config);
     MainFrame* fMain = new MainFrame(NULL);
     SetTopWindow(fMain);
     fMain->Show();
