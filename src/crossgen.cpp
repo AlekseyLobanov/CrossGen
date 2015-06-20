@@ -30,8 +30,7 @@ void readGrid(const wxString path, GridType &grid){
         grid.at(i).resize(f.GetLineCount());
         
     wxLogDebug(wxT("Total lines: %d. First line is %s and size = %d"),f.GetLineCount(), str.c_str(),str.size());
-    unsigned int i = 0;
-    for ( ; !f.Eof(); str = f.GetNextLine() ) {
+    for ( unsigned int i = 0; !f.Eof(); str = f.GetNextLine() ) {
         wxLogDebug(str);
         for (unsigned int j = 0; j < str.size(); ++j)
             grid.at(j).at(i) = str.at(j);
@@ -163,12 +162,7 @@ void generateWordInfo(const GridType &grid, std::vector<WordInfo> &winfos_out){
         }
     }
 }
-/*
-template <class T>
-uint32_t getWordUniq(const T &w_ind, const T &w_len){
-    return w_ind + w_len * MAX_WORD_COUNT;
-}
-*/
+
 bool procCross(
         UsedWords used,
         const AllWordsType &words,
