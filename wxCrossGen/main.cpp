@@ -1,20 +1,8 @@
-#include <map>
-#include <set>
-#include <vector>
-#include <algorithm>
-#include <ctime>
-
 #include <wx/wx.h>
-#include <wx/wfstream.h>
-#include <wx/textfile.h>
 #include <wx/fileconf.h>
 
 #include "fsettings.hpp"
 #include "fmain.hpp"
-
-#include "crossgen.hpp"
-#include "crossexport.hpp"
-#include "settingsconsts.hpp"
 
 class MyApp: public wxApp {
 public:
