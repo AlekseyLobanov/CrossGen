@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="wxCrossGen" InternalType="GUI">
   <Plugins>
+    <Plugin Name="CppCheck"/>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
   "name": "Debug",
@@ -27,14 +28,18 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
-    <File Name="wxgui.hpp"/>
     <File Name="fsettings.hpp"/>
     <File Name="settingsconsts.hpp"/>
+    <File Name="fmain.hpp"/>
+    <File Name="fmain.cpp"/>
+    <File Name="fsettings.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Shared">
     <File Name="../src/crossgen.hpp"/>
     <File Name="../src/crossbasetypes.hpp"/>
     <File Name="../src/crossexport.hpp"/>
+    <File Name="../src/crossexport.cpp"/>
+    <File Name="../src/crossgen.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

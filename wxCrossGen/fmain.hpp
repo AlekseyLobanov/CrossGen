@@ -1,5 +1,6 @@
-#ifndef WXGUI_HPP
-#define WXGUI_HPP
+#ifndef FMAIN_HPP
+#define FMAIN_HPP
+
 
 #include <ctime>
 #include <map>
@@ -7,12 +8,14 @@
 #include <wx/image.h>
 #include <wx/intl.h>
 #include <wx/aboutdlg.h>
+#include <wx/fileconf.h>
 
 #include "fbgui/fbgui.h"
 
+#include "settingsconsts.hpp"
 #include "crossgen.hpp"
+#include "crossexport.hpp"
 #include "fsettings.hpp"
-
 
 #ifndef APP_CATALOG
 #define APP_CATALOG "app"  // replace with the appropriate catalog name
@@ -59,4 +62,4 @@ public:
     }
 };
 
-#endif // WXGUI_HPP
+#endif // FMAIN_HPP

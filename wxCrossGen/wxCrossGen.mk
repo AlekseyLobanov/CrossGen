@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Aleksey Lobanov
-Date                   :=19/06/15
+Date                   :=20/06/15
 CodeLitePath           :="/home/alex/.codelite"
 LinkerName             :=/usr/bin/g++-4.8
 SharedObjectLinkerName :=/usr/bin/g++-4.8 -shared -fPIC
@@ -60,7 +60,7 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/fbgui_fbgui.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/fmain.cpp$(ObjectSuffix) $(IntermediateDirectory)/fsettings.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_crossexport.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_crossgen.cpp$(ObjectSuffix) $(IntermediateDirectory)/fbgui_fbgui.cpp$(ObjectSuffix) 
 
 
 
@@ -94,6 +94,38 @@ $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
 
 $(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) "main.cpp"
+
+$(IntermediateDirectory)/fmain.cpp$(ObjectSuffix): fmain.cpp $(IntermediateDirectory)/fmain.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/data/Sync/SyncProjects/CrossGen/wxCrossGen/fmain.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/fmain.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/fmain.cpp$(DependSuffix): fmain.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/fmain.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/fmain.cpp$(DependSuffix) -MM "fmain.cpp"
+
+$(IntermediateDirectory)/fmain.cpp$(PreprocessSuffix): fmain.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/fmain.cpp$(PreprocessSuffix) "fmain.cpp"
+
+$(IntermediateDirectory)/fsettings.cpp$(ObjectSuffix): fsettings.cpp $(IntermediateDirectory)/fsettings.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/data/Sync/SyncProjects/CrossGen/wxCrossGen/fsettings.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/fsettings.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/fsettings.cpp$(DependSuffix): fsettings.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/fsettings.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/fsettings.cpp$(DependSuffix) -MM "fsettings.cpp"
+
+$(IntermediateDirectory)/fsettings.cpp$(PreprocessSuffix): fsettings.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/fsettings.cpp$(PreprocessSuffix) "fsettings.cpp"
+
+$(IntermediateDirectory)/src_crossexport.cpp$(ObjectSuffix): ../src/crossexport.cpp $(IntermediateDirectory)/src_crossexport.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/data/Sync/SyncProjects/CrossGen/src/crossexport.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_crossexport.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_crossexport.cpp$(DependSuffix): ../src/crossexport.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_crossexport.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_crossexport.cpp$(DependSuffix) -MM "../src/crossexport.cpp"
+
+$(IntermediateDirectory)/src_crossexport.cpp$(PreprocessSuffix): ../src/crossexport.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_crossexport.cpp$(PreprocessSuffix) "../src/crossexport.cpp"
+
+$(IntermediateDirectory)/src_crossgen.cpp$(ObjectSuffix): ../src/crossgen.cpp $(IntermediateDirectory)/src_crossgen.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/data/Sync/SyncProjects/CrossGen/src/crossgen.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_crossgen.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_crossgen.cpp$(DependSuffix): ../src/crossgen.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_crossgen.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_crossgen.cpp$(DependSuffix) -MM "../src/crossgen.cpp"
+
+$(IntermediateDirectory)/src_crossgen.cpp$(PreprocessSuffix): ../src/crossgen.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_crossgen.cpp$(PreprocessSuffix) "../src/crossgen.cpp"
 
 $(IntermediateDirectory)/fbgui_fbgui.cpp$(ObjectSuffix): fbgui/fbgui.cpp $(IntermediateDirectory)/fbgui_fbgui.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/data/Sync/SyncProjects/CrossGen/wxCrossGen/fbgui/fbgui.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/fbgui_fbgui.cpp$(ObjectSuffix) $(IncludePath)
