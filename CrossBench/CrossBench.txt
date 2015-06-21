@@ -1,1 +1,1 @@
-./Release/main.cpp.o
+./Release/main.cpp.o ./Release/src_crossexport.cpp.o ./Release/src_crossgen.cpp.o

@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Aleksey Lobanov
-Date                   :=18/06/15
+Date                   :=22/06/15
 CodeLitePath           :="/home/alex/.codelite"
 LinkerName             :=/usr/bin/g++-4.8
 SharedObjectLinkerName :=/usr/bin/g++-4.8 -shared -fPIC
@@ -60,7 +60,7 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_crossexport.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_crossgen.cpp$(ObjectSuffix) 
 
 
 
@@ -94,6 +94,22 @@ $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
 
 $(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) "main.cpp"
+
+$(IntermediateDirectory)/src_crossexport.cpp$(ObjectSuffix): ../src/crossexport.cpp $(IntermediateDirectory)/src_crossexport.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/data/Sync/SyncProjects/CrossGen/src/crossexport.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_crossexport.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_crossexport.cpp$(DependSuffix): ../src/crossexport.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_crossexport.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_crossexport.cpp$(DependSuffix) -MM "../src/crossexport.cpp"
+
+$(IntermediateDirectory)/src_crossexport.cpp$(PreprocessSuffix): ../src/crossexport.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_crossexport.cpp$(PreprocessSuffix) "../src/crossexport.cpp"
+
+$(IntermediateDirectory)/src_crossgen.cpp$(ObjectSuffix): ../src/crossgen.cpp $(IntermediateDirectory)/src_crossgen.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/data/Sync/SyncProjects/CrossGen/src/crossgen.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_crossgen.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_crossgen.cpp$(DependSuffix): ../src/crossgen.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_crossgen.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_crossgen.cpp$(DependSuffix) -MM "../src/crossgen.cpp"
+
+$(IntermediateDirectory)/src_crossgen.cpp$(PreprocessSuffix): ../src/crossgen.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_crossgen.cpp$(PreprocessSuffix) "../src/crossgen.cpp"
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

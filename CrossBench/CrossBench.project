@@ -94,4 +94,11 @@
       </Completion>
     </Configuration>
   </Settings>
+  <VirtualDirectory Name="Shared">
+    <File Name="../src/crossbasetypes.hpp"/>
+    <File Name="../src/crossexport.cpp"/>
+    <File Name="../src/crossexport.hpp"/>
+    <File Name="../src/crossgen.cpp"/>
+    <File Name="../src/crossgen.hpp"/>
+  </VirtualDirectory>
 </CodeLite_Project>
