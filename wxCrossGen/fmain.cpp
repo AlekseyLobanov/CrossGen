@@ -114,8 +114,8 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
     }
     
     std::vector<wxString> words_out;
-    if ( _dict.empty() ){
-        wxMessageBox( _("Crossword grid isn't loaded!"), _("Info"), wxICON_INFORMATION);
+    if ( _grid.empty() ){
+        wxMessageBox( _("Crossword grid isn't loaded!"), _("Warning"), wxICON_WARNING);
         return;
     }
     try {
@@ -153,7 +153,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
 
 void MainFrame::onExportClick(wxCommandEvent& event) {
     if ( _grid.empty() ) {
-        wxMessageBox( _("Grid isn't loaded now"), _("Info"), wxICON_INFORMATION );
+        wxMessageBox( _("Grid isn't loaded now"), _("Info"), wxICON_WARNING );
         return;
     }
      wxFileDialog dlgSave(this, _("Exporting crossword"), wxEmptyString, wxEmptyString,
