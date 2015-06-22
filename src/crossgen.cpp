@@ -10,11 +10,10 @@ const uint32_t    MAX_WORD_COUNT = 262144; // =2^18
 void readDict(const wxString path, DictType &dict_out){
     wxTextFile f;
     f.Open(path);
-    for ( wxString str = f.GetFirstLine(); !f.Eof(); str = f.GetNextLine() ) {
-        wxString key,val;
+    for (wxString str = f.GetFirstLine(); !f.Eof(); str = f.GetNextLine()) {
         int del_ind = str.Index('-');
-        key = str.Left(del_ind-1);
-        val = str.Right(str.size() - del_ind - 2);
+        wxString key = str.Left(del_ind-1);
+        wxString val = str.Right(str.size() - del_ind - 2);
         dict_out[key] = val;
     }
     f.Close();
@@ -30,12 +29,13 @@ void readGrid(const wxString path, GridType &grid){
         grid.at(i).resize(f.GetLineCount());
         
     wxLogDebug(wxT("Total lines: %d. First line is %s and size = %d"),f.GetLineCount(), str.c_str(),str.size());
-    for ( unsigned int i = 0; !f.Eof(); str = f.GetNextLine() ) {
+    for (unsigned int i = 0; !f.Eof(); str = f.GetNextLine()){
         wxLogDebug(str);
         for (unsigned int j = 0; j < str.size(); ++j)
             grid.at(j).at(i) = str.at(j);
         ++i;
     }
+
     wxLogDebug(wxT("Прочитана сетка размером %d x %d"), 
       static_cast<int>(grid.size()), static_cast<int>(grid.at(0).size()));
     f.Close();
@@ -58,7 +58,6 @@ BackedCharsTransType getFromCharsTransed(const CharsTransType &char_trans){
 }
 
 void toWorkGridType(const GridType &grid, WorkGridType &grid_out){
-    grid_out.clear();
     grid_out.resize(grid.size());
     for (size_t i = 0; i < grid.size(); ++i){
         grid_out.at(i).resize(grid.at(0).size());
@@ -81,7 +80,7 @@ void generateAllWords(const DictType &dict, AllWordsType &words_out,
     TransedChar st = TRANS_BORDER + 1;
     for (auto it = dict.begin(); it != dict.end(); ++it){
         if ( words_out.size() <= it->first.size() )
-            words_out.resize(it->first.size() + 2);
+            words_out.resize(it->first.size() + 1);
         TransedWord t_tw(it->first.size());
         for (size_t i = 0; i < it->first.size(); ++i){
             auto cur_ch = it->first.at(i);
@@ -114,7 +113,7 @@ void generateWordInfo(const GridType &grid, std::vector<WordInfo> &winfos_out){
                         (j !=y_len - 1) )
                     if ( grid.at(i).at(j+1) == CELL_CLEAR ) {
                         size_t cur_len = 1;
-                        bool cont = true;
+                        bool   cont    = true;
                         while ( (j + cur_len < y_len) && cont ) {
                             ++cur_len;
                             if ( grid.at(i).at(j+cur_len-1) != CELL_CLEAR ) {
@@ -171,31 +170,31 @@ bool procCross(
         const size_t cur_word_ind,
         std::vector<TransedWord> &out
 ){
-    if (cur_word_ind == winfos.size())
+    if ( cur_word_ind == winfos.size() )
         return true;
     WordInfo cur_wi = winfos.at(cur_word_ind);
     size_t rand_add = rand() % 100000;
-    size_t cur_len = cur_wi.len;
+    size_t cur_len  = cur_wi.len;
     size_t cur_words_size = words.at(cur_len).size();
     for (size_t icw = 0; icw < cur_words_size; ++icw){
-        if (used.find(getWordUniq(icw,cur_len)) != used.end())
+        if ( used.find(getWordUniq(icw,cur_len)) != used.end() )
             continue;
         TransedWord cur_word = words.at(cur_len).at((icw + rand_add) % cur_words_size);
         // Показывает, можно ли записать это слово в сетку
         bool can_write = true;
-        if ( cur_wi.direct == false ){
+        if ( cur_wi.direct ){
             for (size_t j = 0; j < cur_wi.len; ++j)
-                if ((grid.at(cur_wi.x).at(j + cur_wi.y) != TRANS_CLEAR) &&
-                    (grid.at(cur_wi.x).at(j + cur_wi.y) != cur_word.at(j)))
+                if ( (grid.at(cur_wi.x + j).at(cur_wi.y) != TRANS_CLEAR) &&
+                   (grid.at(cur_wi.x + j).at(cur_wi.y) != cur_word.at(j)) )
                     can_write = false;
         } else {
             for (size_t j = 0; j < cur_wi.len; ++j)
-                if ((grid.at(cur_wi.x + j).at(cur_wi.y) != TRANS_CLEAR) &&
-                   (grid.at(cur_wi.x + j).at(cur_wi.y) != cur_word.at(j)))
+                if ( (grid.at(cur_wi.x).at(j + cur_wi.y) != TRANS_CLEAR) &&
+                    (grid.at(cur_wi.x).at(j + cur_wi.y) != cur_word.at(j)) )
                     can_write = false;
         }
         
-        if (can_write) {
+        if ( can_write ) {
             UsedWords t_used(used);
             t_used.insert(getWordUniq(icw,cur_len));
             
@@ -234,7 +233,6 @@ void generateCross(const GridType &grid, const AllWordsType &words,
     procCross(t_used, words, grid_work, winfos, 0, words_trans_out);
     std::reverse(words_trans_out.begin(), words_trans_out.end());
     BackedCharsTransType bctt = getFromCharsTransed(trans_type);
-    words_out.clear();
     words_out.resize(words_trans_out.size());
     std::transform(
         words_trans_out.begin(),

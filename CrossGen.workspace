@@ -2,6 +2,9 @@
 <CodeLite_Workspace Name="CrossGen" Database="">
   <Project Name="wxCrossGen" Path="wxCrossGen/wxCrossGen.project" Active="Yes"/>
   <Project Name="CrossBench" Path="CrossBench/CrossBench.project" Active="No"/>
+  <Environment>
+    <![CDATA[]]>
+  </Environment>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Project Name="wxCrossGen" ConfigName="Debug"/>

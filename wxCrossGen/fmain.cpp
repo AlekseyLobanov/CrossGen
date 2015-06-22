@@ -55,7 +55,7 @@ void MainFrame::SetGridImage(GridType &grid, size_t w) {
     
     for (size_t i = 0; i < grid.size(); ++i){
         for (size_t j = 0; j < grid.at(0).size(); ++j){
-            if (grid.at(i).at(j) == CELL_CLEAR)
+            if ( grid.at(i).at(j) == CELL_CLEAR )
                 dc.DrawRectangle(sq_w*i,sq_h*j,sq_w+1,sq_h+1);
         }
     }
@@ -140,7 +140,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         
         tOutput->AppendText(getQuesString(t_cross));
         
-        if (winfos.size() == 0) 
+        if ( winfos.size() == 0 ) 
             throw 42;
         SetGridImage(_grid);
     }
@@ -152,13 +152,13 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
 }
 
 void MainFrame::onExportClick(wxCommandEvent& event) {
-    if ( _grid.size() == 0 ) {
+    if ( _grid.empty() ) {
         wxMessageBox( _("Grid isn't loaded now"), _("Info"), wxICON_INFORMATION );
         return;
     }
      wxFileDialog dlgSave(this, _("Exporting crossword"), wxEmptyString, wxEmptyString,
         _("txt files (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
-    if (dlgSave.ShowModal() == wxID_CANCEL)
+    if ( dlgSave.ShowModal() == wxID_CANCEL )
         return;
     FilledCrossword t_cross;
     t_cross.grid = _grid;
@@ -166,7 +166,7 @@ void MainFrame::onExportClick(wxCommandEvent& event) {
     t_cross.ques = _ques;
     generateWordInfo(_grid, t_cross.words);
     if ( !exportToFile(t_cross, dlgSave.GetPath()) ){
-        wxLogError(wxT("Cannot save current contents in file '%s'."), dlgSave.GetPath().GetData());
+        wxLogError(_("Cannot save current contents to file '%s'."), dlgSave.GetPath().GetData());
         return;
     }
     wxLogDebug(wxT("Exporting to ") + dlgSave.GetPath() + wxT(" is complete"));
