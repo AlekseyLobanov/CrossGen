@@ -51,7 +51,7 @@ class VMainFrame : public wxFrame
 		wxButton* bGenerate;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void onExitClick( wxCloseEvent& event ) { event.Skip(); }
+		virtual void onWindowClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void onOpenGridClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onGenerateClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onExportClick( wxCommandEvent& event ) { event.Skip(); }

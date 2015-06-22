@@ -88,7 +88,7 @@ VMainFrame::VMainFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 	this->Layout();
 	
 	// Connect Events
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( VMainFrame::onExitClick ) );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( VMainFrame::onWindowClose ) );
 	this->Connect( miOpenGrid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onOpenGridClick ) );
 	this->Connect( miGenerate->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onGenerateClick ) );
 	this->Connect( miExport->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExportClick ) );
@@ -102,7 +102,7 @@ VMainFrame::VMainFrame( wxWindow* parent, wxWindowID id, const wxString& title, 
 VMainFrame::~VMainFrame()
 {
 	// Disconnect Events
-	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( VMainFrame::onExitClick ) );
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( VMainFrame::onWindowClose ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onOpenGridClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onGenerateClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( VMainFrame::onExportClick ) );

@@ -35,23 +35,15 @@ protected:
 public:
     void SetGridImage(GridType &grid, size_t w=400);
     void procDict(wxString path);
+    void saveConfig();
     
-    MainFrame( wxWindow* parent): VMainFrame(parent) {
-        // Hack for better background
-        #ifdef __WINDOWS__
-        SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
-        #endif
-        _isDictLoaded = false;
-        srand(time(NULL));
-    }
-    void onExitClick( wxCloseEvent& event ) { event.Skip(); }
+    MainFrame( wxWindow* parent);
+    void onWindowClose( wxCloseEvent& event );
     void onOpenGridClick( wxCommandEvent& event );
     void onGenerateClick( wxCommandEvent& event );
     void onSettingsClick( wxCommandEvent& event );
     void onExportClick( wxCommandEvent& event );
-    void onExitClick( wxCommandEvent& event ) {
-        Close();
-    }
+    void onExitClick( wxCommandEvent& event );
     void onAboutClick( wxCommandEvent& event ) {
         wxAboutDialogInfo info;
         info.AddDeveloper(_("Aleksey Lobanov"));

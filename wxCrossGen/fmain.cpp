@@ -1,6 +1,20 @@
 #include "fmain.hpp"
 
 
+MainFrame::MainFrame( wxWindow* parent): VMainFrame(parent) {
+    // Hack for better background
+    #ifdef __WINDOWS__
+    SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+    #endif
+    _isDictLoaded = false;
+    srand(time(NULL));
+    auto *config = wxConfigBase::Get();
+    wxSize sz;
+    sz.SetHeight(config->Read(SETTINGS_KEY_FMAIN_HEIGHT, SETTINGS_DEFAULT_FMAIN_HEIGHT));
+    sz.SetWidth(config->Read(SETTINGS_KEY_FMAIN_WIDTH, SETTINGS_DEFAULT_FMAIN_WIDTH));
+    SetSize(sz);
+}
+
 void MainFrame::procDict(wxString path){
     _dict.clear();
     _allWords.clear();
@@ -182,4 +196,20 @@ void MainFrame::onSettingsClick( wxCommandEvent& event ){
             procDict(fSettings.getDictPath());
         }
     }
+}
+
+void MainFrame::onWindowClose( wxCloseEvent& event ){
+    saveConfig();
+    event.Skip();
+}
+
+void MainFrame::onExitClick( wxCommandEvent& event ){
+    this->Close();
+}
+
+void MainFrame::saveConfig(){
+    auto *config = wxConfigBase::Get();
+    auto sz = GetSize();
+    config->Write(SETTINGS_KEY_FMAIN_HEIGHT, sz.GetHeight());
+    config->Write(SETTINGS_KEY_FMAIN_WIDTH, sz.GetWidth());
 }
