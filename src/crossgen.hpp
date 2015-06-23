@@ -17,9 +17,9 @@ extern const TransedChar TRANS_CLEAR    ;
 extern const TransedChar TRANS_BORDER   ;
 extern const uint32_t    MAX_WORD_COUNT ;
 
-void readDict(const wxString path, DictType &dict_out);
+void readDict(const wxString &path, DictType &dict_out);
 
-void readGrid(const wxString path, GridType &grid);
+void readGrid(const wxString &path, GridType &grid);
 
 wxString getFromTransed(const TransedWord &tw, const BackedCharsTransType &bchar_trans);
 

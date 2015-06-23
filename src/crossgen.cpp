@@ -7,7 +7,7 @@ const TransedChar TRANS_CLEAR    = 0;
 const TransedChar TRANS_BORDER   = 1;
 const uint32_t    MAX_WORD_COUNT = 262144; // =2^18
 
-void readDict(const wxString path, DictType &dict_out){
+void readDict(const wxString &path, DictType &dict_out){
     wxTextFile f;
     f.Open(path);
     for (wxString str = f.GetFirstLine(); !f.Eof(); str = f.GetNextLine()) {
@@ -19,7 +19,7 @@ void readDict(const wxString path, DictType &dict_out){
     f.Close();
 };
 
-void readGrid(const wxString path, GridType &grid){
+void readGrid(const wxString &path, GridType &grid){
     wxTextFile f;
     f.Open(path);
     wxString str = f.GetFirstLine();

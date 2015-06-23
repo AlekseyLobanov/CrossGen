@@ -1,1 +1,1 @@
-../Release/main.cpp.o ../Release/fmain.cpp.o ../Release/fsettings.cpp.o ../Release/src_crossexport.cpp.o ../Release/src_crossgen.cpp.o ../Release/fbgui_fbgui.cpp.o
+./Debug/main.cpp.o ./Debug/fmain.cpp.o ./Debug/fsettings.cpp.o ./Debug/src_crossexport.cpp.o ./Debug/src_crossgen.cpp.o ./Debug/fbgui_fbgui.cpp.o

@@ -63,7 +63,7 @@ void exportToString(const FilledCrossword &cross, wxString &str_out, wxChar spac
     str_out += getGridString(cross, space) + getQuesString(cross);
 }
 
-bool exportToFile(const FilledCrossword &cross, const wxString path){
+bool exportToFile(const FilledCrossword &cross, const wxString &path){
     wxTextFile f(path);
     if ( f.Exists() )
         return false;
