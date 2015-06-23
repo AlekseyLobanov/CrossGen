@@ -175,22 +175,22 @@ bool procCross(
     WordInfo cur_wi = winfos.at(cur_word_ind);
     size_t rand_add = rand() % 100000;
     size_t cur_len  = cur_wi.len;
-    size_t cur_words_size = words.at(cur_len).size();
+    size_t cur_words_size = words[cur_len].size();
     for (size_t icw = 0; icw < cur_words_size; ++icw){
         if ( used.find(getWordUniq(icw,cur_len)) != used.end() )
             continue;
-        TransedWord cur_word = words.at(cur_len).at((icw + rand_add) % cur_words_size);
+        TransedWord cur_word = words[cur_len][(icw + rand_add) % cur_words_size];
         // Показывает, можно ли записать это слово в сетку
         bool can_write = true;
         if ( cur_wi.direct ){
             for (size_t j = 0; j < cur_wi.len; ++j)
-                if ( (grid.at(cur_wi.x + j).at(cur_wi.y) != TRANS_CLEAR) &&
-                   (grid.at(cur_wi.x + j).at(cur_wi.y) != cur_word.at(j)) )
+                if ( (grid[cur_wi.x + j][cur_wi.y] != TRANS_CLEAR) &&
+                   (grid[cur_wi.x + j][cur_wi.y] != cur_word[j]) )
                     can_write = false;
         } else {
             for (size_t j = 0; j < cur_wi.len; ++j)
-                if ( (grid.at(cur_wi.x).at(j + cur_wi.y) != TRANS_CLEAR) &&
-                    (grid.at(cur_wi.x).at(j + cur_wi.y) != cur_word.at(j)) )
+                if ( (grid[cur_wi.x][j + cur_wi.y] != TRANS_CLEAR) &&
+                    (grid[cur_wi.x][j + cur_wi.y] != cur_word[j]) )
                     can_write = false;
         }
         
@@ -202,10 +202,10 @@ bool procCross(
             
             if ( cur_wi.direct ){
                 for (size_t j = 0; j < cur_wi.len; ++j)
-                    t_grid.at(cur_wi.x + j).at(cur_wi.y) = cur_word.at(j);
+                    t_grid[cur_wi.x + j][cur_wi.y] = cur_word[j];
             } else {
                 for (size_t j = 0; j < cur_wi.len; ++j)
-                    t_grid.at(cur_wi.x).at(j + cur_wi.y) = cur_word.at(j);
+                    t_grid[cur_wi.x][j + cur_wi.y] = cur_word[j];
             }
                 
             if (procCross(t_used, words, t_grid, winfos, cur_word_ind + 1, out)){
