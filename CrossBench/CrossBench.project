@@ -8,6 +8,13 @@
   <VirtualDirectory Name="src">
     <File Name="main.cpp"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="Shared">
+    <File Name="../src/crossbasetypes.hpp"/>
+    <File Name="../src/crossexport.cpp"/>
+    <File Name="../src/crossexport.hpp"/>
+    <File Name="../src/crossgen.cpp"/>
+    <File Name="../src/crossgen.hpp"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-std=c++11" C_Options="" Assembler="">
@@ -55,6 +62,44 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
+    <Configuration Name="Profiling" CompilerType="GCC ( 4.8 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-pg;-g;-O2;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=no)" C_Options="-pg;-g;-O2;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=no)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <Preprocessor Value="NDEBUG"/>
+      </Compiler>
+      <Linker Options="-pg;$(shell wx-config --debug=no --libs --unicode=yes)" Required="yes"/>
+      <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="yes" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
     <Configuration Name="Release" CompilerType="GCC ( 4.8 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-O2;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=no)" C_Options="-O2;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=no)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <Preprocessor Value="NDEBUG"/>
@@ -94,11 +139,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="Shared">
-    <File Name="../src/crossbasetypes.hpp"/>
-    <File Name="../src/crossexport.cpp"/>
-    <File Name="../src/crossexport.hpp"/>
-    <File Name="../src/crossgen.cpp"/>
-    <File Name="../src/crossgen.hpp"/>
-  </VirtualDirectory>
 </CodeLite_Project>
