@@ -70,6 +70,7 @@ void toWorkGridType(const GridType &grid, WorkGridType &grid_out){
     }
 }
 
+//TODO: new function works very bad with Russian dictionary
 void generateAllWords(const DictType &dict, AllWordsType &words_out, 
         CharsTransType &char_trans_out){
     words_out.clear();
@@ -77,10 +78,61 @@ void generateAllWords(const DictType &dict, AllWordsType &words_out,
     char_trans_out[CELL_CLEAR]  = TRANS_CLEAR;
     char_trans_out[CELL_BORDER] = TRANS_BORDER;
     static_assert(TRANS_CLEAR + 1 == TRANS_BORDER, "TRANS_CLEAR + 1 != TRANS_BORDER");
+    
+    
+    std::map<wxChar,size_t> freqs;
+    size_t                  char_cnt = 0;
+    std::vector< wxChar >   freqs_sorted; // Contains letters sorted by newest frequency
+    for (auto it = dict.begin(); it != dict.end(); ++it){
+        for (auto cht = it->first.begin(); cht != it->first.end(); ++cht){
+            if ( freqs.find(*cht) != freqs.end() )
+                freqs[*cht] += 1;
+            else
+                freqs[*cht] = 1;
+            ++char_cnt;
+        }
+    }
+    
+    for (auto i: freqs)
+        freqs_sorted.push_back(i.first);
+
+    std::sort(freqs_sorted.begin(),freqs_sorted.end(), 
+        [freqs](wxChar val1, wxChar val2) { return freqs.at(val1) > freqs.at(val2);});
+        
+    #ifndef NDEBUG
+        wxLogDebug(wxT("Printing list of sorted letters:"));
+        for (auto i: freqs_sorted)
+            wxLogDebug(wxString(i));
+        for (auto i: freqs)
+            wxLogDebug(wxT("Freq of ") + wxString(i.first) + wxT(" is %d"), i.second);
+    #endif
+    
+    // Function returns -1 if this word is so bad to include to dict
+    // else return points for scoreng. More = better
+    // TODO: improve formula
+    std::function< int(const wxString& ) > getWordScore = [freqs, freqs_sorted, char_cnt]
+        (const wxString &s){
+            double score = 0;
+            for (auto ch: s)
+                score += 1 / pow(static_cast<double>(freqs.at(ch))/char_cnt,2);
+            // static_cast<double>(freqs.at(ch))/char_cnt = normalaised frequency
+            
+            // euristic fomula for good (not normal)
+            score = score / s.size() + pow(std::max((int(s.size())-12),0),1.4) *15;
+            if ( score > 1.2 * freqs.size() * freqs.size() )
+                return static_cast<int>(score);
+            else
+                return -1;
+        };
+    
     TransedChar st = TRANS_BORDER + 1;
     for (auto it = dict.begin(); it != dict.end(); ++it){
         if ( words_out.size() <= it->first.size() )
             words_out.resize(it->first.size() + 1);
+        
+        if ( getWordScore(it->first) == -1 )
+            continue;
+        
         TransedWord t_tw(it->first.size());
         for (size_t i = 0; i < it->first.size(); ++i){
             auto cur_ch = it->first.at(i);
@@ -92,6 +144,46 @@ void generateAllWords(const DictType &dict, AllWordsType &words_out,
         }
         words_out.at(it->first.size()).push_back(t_tw);
     }
+    
+    auto bctt = getFromCharsTransed(char_trans_out);
+    
+    // sorting of words with good order <=> scores(i) > scores(i+1)
+    for (unsigned int i = 2; i < words_out.size(); ++i)
+        std::sort(words_out.at(i).begin(),words_out.at(i).end(),
+            [getWordScore, bctt](const TransedWord &a, const TransedWord &b){
+                return getWordScore(getFromTransed(a, bctt)) > getWordScore(getFromTransed(b, bctt));
+            }
+        );
+    
+    #ifndef NDEBUG
+        wxLogDebug(wxT("%d -> %d"),getWordScore(getFromTransed(words_out.at(5).at(2), bctt)),getWordScore(getFromTransed(words_out.at(5).at(400), bctt)));
+        AllWordsType words_out_t;
+        st = TRANS_BORDER + 1;
+        for (auto it = dict.begin(); it != dict.end(); ++it){
+            if ( words_out_t.size() <= it->first.size() )
+                words_out_t.resize(it->first.size() + 1);
+            
+            TransedWord t_tw(it->first.size());
+            for (size_t i = 0; i < it->first.size(); ++i){
+                auto cur_ch = it->first.at(i);
+                if ( char_trans_out.find(cur_ch) == char_trans_out.end() ){
+                    char_trans_out[cur_ch] = st;
+                    ++st;
+                }
+                t_tw.at(i) = char_trans_out[cur_ch];
+            }
+            words_out_t.at(it->first.size()).push_back(t_tw);
+        }
+        
+        for (unsigned int i = 2; i < words_out.size(); ++i)
+            wxLogDebug(wxT("With length %2d is %4d and after it %4d and coeff is %2.2f"), 
+                i, words_out_t.at(i).size(), words_out.at(i).size(), float(words_out_t.at(i).size())/words_out.at(i).size());
+        
+        wxLogDebug(wxT("Number of words is %d"), dict.size());
+        int cur_s = std::accumulate(words_out.begin(),words_out.end(), 0, []
+            (int &s, std::vector< TransedWord > &add) { return s+add.size(); });
+        wxLogDebug(wxT("Current size is %d"), cur_s);
+    #endif
 }
 
 void generateWordInfo(const GridType &grid, std::vector<WordInfo> &winfos_out){
@@ -173,7 +265,7 @@ bool procCross(
     if ( cur_word_ind == winfos.size() )
         return true;
     WordInfo cur_wi = winfos.at(cur_word_ind);
-    size_t rand_add = rand() % 100000;
+    size_t rand_add = rand() % 8;
     size_t cur_len  = cur_wi.len;
     size_t cur_words_size = words[cur_len].size();
     for (size_t icw = 0; icw < cur_words_size; ++icw){

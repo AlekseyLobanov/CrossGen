@@ -1,10 +1,12 @@
 #ifndef CROSSGEN_HPP
 #define CROSSGEN_HPP
 
+#include <cmath>
 #include <set>
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <functional>
 
 #include <wx/wx.h>
 #include <wx/textfile.h>
