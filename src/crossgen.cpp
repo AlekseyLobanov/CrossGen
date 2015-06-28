@@ -112,15 +112,21 @@ void generateAllWords(const DictType &dict, AllWordsType &words_out,
     // TODO: improve formula
     std::function< int(const wxString& ) > getWordScore = [freqs, freqs_sorted, char_cnt]
         (const wxString &s){
-            double score = 0;
+            double score = 1;
             for (auto ch: s)
-                score += 1 / pow(static_cast<double>(freqs.at(ch))/char_cnt,2);
+                score *= static_cast<double>(freqs.at(ch))/char_cnt;
             // static_cast<double>(freqs.at(ch))/char_cnt = normalaised frequency
             
             // euristic fomula for good (not normal)
-            score = score / s.size() + pow(std::max((int(s.size())-12),0),1.4) *15;
-            if ( score > 1.2 * freqs.size() * freqs.size() )
-                return static_cast<int>(score);
+            
+            score = std::pow(score, 1./s.size()); // score == mean geometric
+            /* magic formula, linear interpolation from good numbers
+             * can be taken from Maxima code:
+             * solve ([33*k+m = 1/20.4, 26*k+m=1/19],[k,m]);
+             */
+            if ( score > 64./969 - freqs.size()*1./1938 )
+            //if ( score > (1.3)* 1./(freqs.size() - 8))
+                return static_cast<int>(score * 1000);
             else
                 return -1;
         };
@@ -176,7 +182,7 @@ void generateAllWords(const DictType &dict, AllWordsType &words_out,
         }
         
         for (unsigned int i = 2; i < words_out.size(); ++i)
-            wxLogDebug(wxT("With length %2d is %4d and after it %4d and coeff is %2.2f"), 
+            wxLogDebug(wxT("With length %2d is %5d and after it %4d and coeff is %2.2f"), 
                 i, words_out_t.at(i).size(), words_out.at(i).size(), float(words_out_t.at(i).size())/words_out.at(i).size());
         
         wxLogDebug(wxT("Number of words is %d"), dict.size());

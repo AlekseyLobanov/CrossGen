@@ -41,6 +41,10 @@
     <File Name="../src/crossexport.cpp"/>
     <File Name="../src/crossgen.cpp"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="FormBuilderGUI">
+    <File Name="fbgui/fbgui.cpp"/>
+    <File Name="fbgui/fbgui.h"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="-std=c++11" C_Options="" Assembler="">
@@ -127,8 +131,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="FormBuilderGUI">
-    <File Name="fbgui/fbgui.cpp"/>
-    <File Name="fbgui/fbgui.h"/>
-  </VirtualDirectory>
 </CodeLite_Project>
