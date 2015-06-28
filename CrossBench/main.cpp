@@ -80,10 +80,10 @@ int main(int argc, char **argv) {
         durs.at(i) = wxGetLocalTimeMillis();
         generateCross(grid,all_words,trans_type,words_out);
         if ( words_out.size() == 0 )
-            wxPrintf(wxT("Error in creating #%i!\n"),i+1);
+            wxPrintf(wxT("Error in creating #%-2i!\n"),i+1);
         durs.at(i) = wxGetLocalTimeMillis() - durs.at(i);
         if ( is_verbose )
-            wxPrintf(wxT("Time to generate #%i is ") 
+            wxPrintf(wxT("Time to generate  #%-2i is ") 
                 + durs.at(i).ToString() + wxT(" ms\n"), i+1);
     }
     wxLongLong tm_total = std::accumulate(durs.begin(),durs.end(), wxLongLong(0,0));

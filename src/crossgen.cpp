@@ -36,7 +36,7 @@ void readGrid(const wxString &path, GridType &grid){
         ++i;
     }
 
-    wxLogDebug(wxT("Прочитана сетка размером %d x %d"), 
+    wxLogDebug(wxT("Grid with size %2d x %2d is readden"), 
       static_cast<int>(grid.size()), static_cast<int>(grid.at(0).size()));
     f.Close();
 }
@@ -101,10 +101,8 @@ void generateAllWords(const DictType &dict, AllWordsType &words_out,
         
     #ifndef NDEBUG
         wxLogDebug(wxT("Printing list of sorted letters:"));
-        for (auto i: freqs_sorted)
-            wxLogDebug(wxString(i));
         for (auto i: freqs)
-            wxLogDebug(wxT("Freq of ") + wxString(i.first) + wxT(" is %d"), i.second);
+            wxLogDebug(wxT("Freq of ") + wxString(i.first) + wxT(" is %5d"), i.second);
     #endif
     
     // Function returns -1 if this word is so bad to include to dict
@@ -321,7 +319,7 @@ void generateCross(const GridType &grid, const AllWordsType &words,
     std::vector<WordInfo> winfos;
     generateWordInfo(grid, winfos);
     for (size_t i = 0; i < winfos.size(); ++i)
-        wxLogDebug(wxT("Word at (%d,%d) with len = %d and index = %d and dir = %d"),
+        wxLogDebug(wxT("Word at (%2d,%2d) with len = %2d and index = %2d and dir = %d"),
           winfos.at(i).x,winfos.at(i).y,winfos.at(i).len, winfos.at(i).ind, int(winfos.at(i).direct));
           
     WorkGridType grid_work;
