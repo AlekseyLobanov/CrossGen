@@ -14,7 +14,7 @@ void readDict(const wxString &path, DictType &dict_out){
         int del_ind = str.Index('-');
         wxString key = str.Left(del_ind-1);
         wxString val = str.Right(str.size() - del_ind - 2);
-        dict_out[key] = val;
+        dict_out.insert(std::make_pair(key,val));
     }
     f.Close();
 };
@@ -304,7 +304,7 @@ bool procCross(
                     t_grid[cur_wi.x][j + cur_wi.y] = cur_word[j];
             }
                 
-            if (procCross(t_used, words, t_grid, winfos, cur_word_ind + 1, out)){
+            if ( procCross(t_used, words, t_grid, winfos, cur_word_ind + 1, out) ){
                 out.push_back(cur_word);
                 return true;
             }
@@ -318,9 +318,9 @@ void generateCross(const GridType &grid, const AllWordsType &words,
     
     std::vector<WordInfo> winfos;
     generateWordInfo(grid, winfos);
-    for (size_t i = 0; i < winfos.size(); ++i)
+    for (auto el: winfos)
         wxLogDebug(wxT("Word at (%2d,%2d) with len = %2d and index = %2d and dir = %d"),
-          winfos.at(i).x,winfos.at(i).y,winfos.at(i).len, winfos.at(i).ind, int(winfos.at(i).direct));
+          el.x,el.y,el.len, el.ind, int(el.direct));
           
     WorkGridType grid_work;
     toWorkGridType(grid, grid_work);

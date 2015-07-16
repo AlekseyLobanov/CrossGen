@@ -142,7 +142,7 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         
         _ques.clear();
         for (size_t i = 0; i < words_out.size(); ++i)
-            _ques.push_back(_dict[words_out.at(i)]);
+            _ques.push_back(_dict.find(words_out.at(i))->second);
         
         tOutput->Clear();
         

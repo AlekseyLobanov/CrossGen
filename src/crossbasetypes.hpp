@@ -6,7 +6,9 @@
 #include <cstdint>
 #include <map>
 
-typedef std::map< wxString, wxString > DictType;
+// TODO: Improve worling with multiple definition of words. Move working with it
+// to crossgen.cpp from fmain.cpp
+typedef std::multimap< wxString, wxString > DictType;
 typedef std::vector< std::vector< wxChar > > GridType;
 
 typedef uint8_t TransedChar;

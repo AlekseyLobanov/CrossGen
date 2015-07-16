@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="CrossBench" InternalType="GUI">
   <Plugins>
+    <Plugin Name="CppCheck"/>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
   "name": "Debug",
@@ -31,7 +32,6 @@
   "parentProject": ""
  }]]]>
     </Plugin>
-    <Plugin Name="CppCheck"/>
   </Plugins>
   <Description/>
   <Dependencies/>
