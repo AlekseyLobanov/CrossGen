@@ -18,7 +18,7 @@
 #include "fsettings.hpp"
 
 #ifndef APP_CATALOG
-#define APP_CATALOG "app"  // replace with the appropriate catalog name
+#define APP_CATALOG "CrossGen"
 #endif
 
 
@@ -46,6 +46,7 @@ public:
     void onExitClick( wxCommandEvent& event );
     void onAboutClick( wxCommandEvent& event ) {
         wxAboutDialogInfo info;
+        info.SetVersion(wxT("1.0"));
         info.AddDeveloper(_("Aleksey Lobanov"));
         info.SetDescription(_("Simple GUI cross-generation application. Yet another bike"));
         info.SetName(wxTheApp->GetAppName());

@@ -1,0 +1,157 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CrossGen\n"
+"POT-Creation-Date: 2015-07-23 22:23+0300\n"
+"PO-Revision-Date: 2015-07-23 22:23+0300\n"
+"Last-Translator: Aleksey Lobanov <alekseylobanov1@gmail.com>\n"
+"Language-Team: Aleksey Lobanov <alekseylobanov1@gmail.com>\n"
+"Language: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: src\n"
+"X-Poedit-SearchPath-1: wxCrossGen\n"
+
+#: src/crossexport.cpp:43
+msgid "Vertical words:"
+msgstr "По вертикали:"
+
+#: src/crossexport.cpp:51
+msgid "Horisontal words:"
+msgstr "По горизонтали:"
+
+#: wxCrossGen/fmain.cpp:28
+msgid "Open crossword file"
+msgstr "Открыть файл кроссворда"
+
+#: wxCrossGen/fmain.cpp:29
+msgid "Files of crossword (*.cross)|*.cross"
+msgstr "Файлы кроссворда (*.cross)|*.cross"
+
+#: wxCrossGen/fmain.cpp:35
+msgid "Cannot open file "
+msgstr "Не могу открыть файл"
+
+#: wxCrossGen/fmain.cpp:35 wxCrossGen/fmain.cpp:167
+#: wxCrossGen/fsettings.cpp:12 wxCrossGen/fsettings.cpp:21
+msgid "Error"
+msgstr "Ошибка"
+
+#: wxCrossGen/fmain.cpp:132
+msgid "Crossword grid isn't loaded!"
+msgstr "Сетка кроссврода ещё не загружена"
+
+#: wxCrossGen/fmain.cpp:132
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: wxCrossGen/fmain.cpp:167
+msgid "Cannot generate crossword"
+msgstr "Невозможно сгенерировать кроссворд"
+
+#: wxCrossGen/fmain.cpp:174
+msgid "Grid isn't loaded now"
+msgstr "Сетка ещё не загружена"
+
+#: wxCrossGen/fmain.cpp:174
+msgid "Info"
+msgstr "Информация"
+
+#: wxCrossGen/fmain.cpp:177
+msgid "Exporting crossword"
+msgstr "Экспорт кроссворда"
+
+#: wxCrossGen/fmain.cpp:178
+msgid "txt files (*.txt)|*.txt"
+msgstr "Текстовые файлы (*.txt)|*.txt"
+
+#: wxCrossGen/fmain.cpp:187
+#, c-format
+msgid "Cannot save current contents to file '%s'."
+msgstr "Не могу сохранить текущие данные в '%s'."
+
+#: wxCrossGen/fsettings.cpp:4
+msgid "Open dictionary file"
+msgstr "Открыть файл словаря"
+
+#: wxCrossGen/fsettings.cpp:5
+msgid "Files of dictionaries (*.txt)|*.txt"
+msgstr "Файлы словаря (*.txt)|*.txt"
+
+#: wxCrossGen/fsettings.cpp:12 wxCrossGen/fsettings.cpp:21
+msgid "Cannot open dictionary file "
+msgstr "Не могу открыть файл словаря"
+
+#: wxCrossGen/fbgui/fbgui.cpp:19
+msgid "&Open grid"
+msgstr "Открыть сетку"
+
+#: wxCrossGen/fbgui/fbgui.cpp:23
+msgid "&Generate"
+msgstr "Генерировать"
+
+#: wxCrossGen/fbgui/fbgui.cpp:27
+msgid "&Export"
+msgstr "Экспорт"
+
+#: wxCrossGen/fbgui/fbgui.cpp:31
+msgid "&Settings"
+msgstr "Настройки"
+
+#: wxCrossGen/fbgui/fbgui.cpp:35
+msgid "E&xit"
+msgstr "Выход"
+
+#: wxCrossGen/fbgui/fbgui.cpp:38
+msgid "File"
+msgstr "Файл"
+
+#: wxCrossGen/fbgui/fbgui.cpp:42
+msgid "&About"
+msgstr "О программе"
+
+#: wxCrossGen/fbgui/fbgui.cpp:45
+msgid "Help"
+msgstr "Помощь"
+
+#: wxCrossGen/fbgui/fbgui.cpp:58 wxCrossGen/fbgui/fbgui.cpp:136
+msgid "..."
+msgstr "..."
+
+#: wxCrossGen/fbgui/fbgui.cpp:82
+msgid "Generate"
+msgstr "Гененрировать"
+
+#: wxCrossGen/fbgui/fbgui.cpp:126
+msgid "Dict path:"
+msgstr "Путь к словарю:"
+
+#: wxCrossGen/fbgui/fbgui.cpp:150
+msgid "Cancel"
+msgstr "Отмена"
+
+#: wxCrossGen/fbgui/fbgui.cpp:153
+msgid "OK"
+msgstr "OK"
+
+#: wxCrossGen/fbgui/fbgui.h:65
+msgid "CrossGen"
+msgstr "CrossGen"
+
+#: wxCrossGen/fbgui/fbgui.h:95
+msgid "Settings"
+msgstr "Настройки"
+
+#: wxCrossGen/fmain.hpp:50
+msgid "Aleksey Lobanov"
+msgstr "Алексей Лобанов"
+
+#: wxCrossGen/fmain.hpp:51
+msgid "Simple GUI cross-generation application. Yet another bike"
+msgstr ""
+"Простое графическое приложение для генерации кроссворда по заданной сетке. "
+"Ещё одно."

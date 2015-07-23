@@ -2,7 +2,7 @@
 
 void SettingsDialog::onDictPathClick(wxCommandEvent& event) {
     wxFileDialog dlgOpen(this, _("Open dictionary file"), wxEmptyString, wxEmptyString,
-    _("Files of dictionaris (*.txt)|*.txt"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    _("Files of dictionaries (*.txt)|*.txt"), wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     
     if ( dlgOpen.ShowModal() == wxID_CANCEL )
         return;

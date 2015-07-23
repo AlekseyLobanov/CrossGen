@@ -109,7 +109,7 @@ void generateAllWords(const DictType &dict, AllWordsType &words_out,
     // else return points for scoreng. More = better
     // TODO: improve formula
     std::function< int(const wxString& ) > getWordScore = [freqs, freqs_sorted, char_cnt]
-        (const wxString &s){
+        (const wxString &s) -> int{
             double score = 1;
             for (auto ch: s)
                 score *= static_cast<double>(freqs.at(ch))/char_cnt;

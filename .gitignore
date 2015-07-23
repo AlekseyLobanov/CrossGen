@@ -53,3 +53,7 @@ Debug
 Release
 big_cross_ru.txt
 big_cross_eng.txt
+cur_release
+
+#Just statistics
+crossgen_time.txt
