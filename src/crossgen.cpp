@@ -1,5 +1,5 @@
 #include "crossgen.hpp"
-
+//TODO: fix crash when genereates crossword in debug mode with floating-point error
 
 const wxChar      CELL_CLEAR     = wxT('+');
 const wxChar      CELL_BORDER    = wxT('-');

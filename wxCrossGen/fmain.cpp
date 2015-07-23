@@ -140,9 +140,15 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         std::vector<WordInfo> winfos;
         generateWordInfo(_grid, winfos);
         
+        if ( winfos.size() == 0 ) 
+            throw 42;
+        
         _ques.clear();
         for (size_t i = 0; i < words_out.size(); ++i)
-            _ques.push_back(_dict.find(words_out.at(i))->second);
+            _ques.push_back(getRandInterval(
+                _dict.lower_bound(words_out.at(i)),
+                _dict.upper_bound(words_out.at(i))
+            )->second);
         
         tOutput->Clear();
         
@@ -154,8 +160,6 @@ void MainFrame::onGenerateClick(wxCommandEvent &event) {
         
         tOutput->AppendText(getQuesString(t_cross));
         
-        if ( winfos.size() == 0 ) 
-            throw 42;
         SetGridImage(_grid);
     }
     catch ( ... ){

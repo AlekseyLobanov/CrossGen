@@ -51,4 +51,9 @@ bool procCross(
 void generateCross(const GridType &grid, const AllWordsType &words, 
     const CharsTransType &trans_type, std::vector<wxString> &words_out);
 
+template <class InputIterator>
+InputIterator getRandInterval(const InputIterator first, const InputIterator last){
+    auto d = std::distance(first, last);
+    return next(first, rand() % d);
+}
 #endif // CROSSGEN_HPP
