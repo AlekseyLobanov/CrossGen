@@ -14,7 +14,5 @@ Only wxWidgets.
 
 ### To-Do list ###
 
-* [ ] Progress indication
 * [ ] Customiztion
 * [ ] Refactoring
-* [ ] Optimizations of generating crosswords
