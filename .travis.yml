@@ -1,0 +1,14 @@
+language: cpp
+sudo: required
+compiler:
+- gcc
+- clang
+os:
+- linux
+- osx
+before_script:
+- sudo apt-get install libwxgtk2.8-dev libwxgtk2.8-dbg
+- ./configure
+script: make
+notifications:
+  email: true
