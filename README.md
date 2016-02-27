@@ -16,3 +16,5 @@ Only wxWidgets.
 
 * [ ] Customiztion
 * [ ] Refactoring
+
+![Travis status](https://travis-ci.org/AlekseyLobanov/CrossGen.svg)
