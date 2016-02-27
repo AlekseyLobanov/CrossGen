@@ -5,6 +5,13 @@ compiler:
 - gcc
 os:
 - linux
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
 before_script:
 - sudo apt-get install libwxgtk2.8-dev libwxgtk2.8-dbg
 script: make
